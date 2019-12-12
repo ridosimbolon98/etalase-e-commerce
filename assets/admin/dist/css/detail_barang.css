@@ -1,0 +1,51 @@
+.img-bg-persegi {
+	background-color: white;
+	margin: auto;
+	width: 260px;
+	height: 260px;
+	margin-bottom: 10px;
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+}
+
+.img-bg-persegi .isi-gambar {
+	margin: 5px auto;
+	padding: 10px auto;
+}
+
+.img-bg-persegi:hover {
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(125,110,125,1);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(125,110,125,1);
+	box-shadow: 0px 0px 8px 1px rgba(125,110,125,1);
+}
+
+.detail {
+	padding: 20px;
+}
+
+.box-shadow-gambar {
+	margin: 10px auto;
+	padding: 20px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+}
+
+.box-shadow-detail {
+	margin: 10px auto;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+	box-shadow: 0px 0px 8px 1px rgba(204,204,204,0.82);
+}
+
+.kategori {
+	color: #5691f7;
+	font-style: italic;
+}
+
+.deskripsi-produk {
+	color: #97999c;
+}

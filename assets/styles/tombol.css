@@ -1,0 +1,52 @@
+.tombol-jual {
+	cursor: pointer;
+}
+.tombol-jual:hover {
+	cursor: pointer;
+	color: #808080;
+}
+
+
+@media screen and (min-width: 525px) {
+	.jual-barang {
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+}
+
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.tombol_file {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.tombol-sama {
+  width: 160px;
+}
+
+.kotak-chat {
+  margin-bottom: 30px;
+}
+
+.hilang{
+  display: none;
+}
