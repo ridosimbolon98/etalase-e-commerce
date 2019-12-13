@@ -151,43 +151,80 @@
 
 	</header>
 
+
+
+<!-- Bagian Utama -->
+
 <?php foreach ($anggota as $row) { ?>
 
 	<div class="profil">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4 m-3">
+				<div class="col-sm-4 mt-3">
 					<div class="">
 						<h4><i class="fa fa-th-large"></i> Profil <?= $row->nama; ?></h4>
 						<p>Jumlah barang yang dijual 24</p>
 					</div>
-				</div>
-				<div class="col-sm-6 m-3">
 					<div class="">
 						<table class="table table-default">
 							<tr>
 								<td>Nama</td>
-								<td>: <?= $row->nama; ?></td>
+								<td>:</td>
+								<td><?= $row->nama; ?></td>
 							</tr>
 							<tr>
 								<td>Alamat</td>
-								<td>: <?= $row->alamat; ?></td>
+								<td>:</td>
+								<td><?= $row->alamat; ?></td>
 							</tr>
 							<tr>
 								<td>Email</td>
-								<td>: <?= $row->username; ?></td>
+								<td>:</td>
+								<td><?= $row->username; ?></td>
 							</tr>
 							<tr>
 								<td>No HP</td>
-								<td>: <?= $row->hp; ?></td>
+								<td>:</td>
+								<td><?= $row->hp; ?></td>
 							</tr>
 							<tr>
-								<td colspan="2">
+								<td colspan="3">
 									<a class="btn btn-primary mb-2 tombol-sama" href="" data-toggle="modal" data-target="#editProfilModal"><i class="fa fa-cogs"></i> Edit Profil</a>
 									<a class="btn btn-secondary mb-2 tombol-sama" href=""  data-toggle="modal" data-target="#gantiPasswordModal"><i class="fa fa-cog"></i> Ubah Password</a>
 								</td>
 							</tr>
 						</table>
+					</div>
+				</div>
+
+
+				<div class="col-sm-6 m-3">
+					<div class="text-center">
+						<h4>Daftar barang</h4>
+					</div>
+					<!-- menampilkan daftar barang yg dijual akun session -->
+					<div class="row">
+						<?php foreach ($barang as $brg) { ?>
+							<div class="col-sm-4 p-2 text-center mb-3">
+								<a href="<?= base_url(); ?>shop/produk/<?= $brg->id; ?>">	
+									<div class="product_image d-flex flex-column align-items-center justify-content-center">
+										<img class="img-fluid" src="<?= base_url(); ?>img/<?= json_decode($brg->gambar,true)[0]; ?>" alt="Gambar Barang">
+									</div>
+								</a>
+								<div class="" hidden><?= $brg->harga ?></div>
+								<div class="text-danger">
+									<b><?= 'Rp '.number_format($brg->harga,2,",","."); ?></b>
+								</div>
+								<div class="">
+									<div>
+										<a class="text-dark" href="#"><?= $brg->nama_barang; ?></a>
+									</div>
+								</div>
+								<div>
+									<a href="#" class="btn btn-primary">Detail</a>
+								</div>
+							</div>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -196,6 +233,11 @@
 	</div>
 
 <?php } ?>
+
+
+<!-- Akhir bagian utama -->
+
+
 
 	<!-- Newsletter -->
 

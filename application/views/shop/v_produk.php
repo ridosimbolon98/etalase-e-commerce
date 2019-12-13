@@ -46,13 +46,10 @@
 						<div class="order_info d-flex flex-row mt-3">
 							<div class="d-flex flex-row">
 								<div class="btn-adm mb-5">
-									<a class="btn btn-primary mr-2 text-white" id="chatBtn">Chat</a>
+									<a class="btn btn-primary mr-2 text-white" id="chatBtn"><i class="fa fa-comment"></i> Chat</a>
 								</div>
 								<div class="btn-adm mb-5">
 									<a class="btn btn-success mr-2" href="https://api.whatsapp.com/send?phone=6285361872032&text=Selamat%20Datang%20di%20Jualin%20Id" target="_blank"><i class="fab fa-whatsapp"></i> SMS/WA</a>
-								</div>
-								<div class="btn-adm mb-5">
-									<a class="btn btn-secondary" href="">Nego</a>
 								</div>
 							</div>
 						</div>
@@ -65,48 +62,6 @@
 			</div>
 		</div>
 	</div>
-
-<?php if(in_array('login',  $this->session->userdata())) { ?>
-
-	<!-- Chat Produk -->
-	<div class="">
-	  <div class="container kotakChat"> <!-- tambahkan class hilang -->
-		<div class="col-md-12">
-	      <!-- DIRECT CHAT -->
-	      <div class="box box-primary direct-chat direct-chat-primary">
-	        <div class="box-header with-border">
-	          <h3 class="box-title">Chat dengan admin</h3>
-	        </div>
-	        <!-- /.box-header -->
-	        <div class="box-body">
-	          <!-- Conversations are loaded here -->
-	          <div class="direct-chat-messages" id="content">
-
-	          	<div id="pesan"></div>
-
-	          </div>
-	          <!--/.direct-chat-messages-->
-	        </div>
-	        <!-- /.box-body -->
-	        <div class="box-footer">
-	            <div class="input-group">
-	              <input id="idBarang" type="text" hidden name="idBarang" class="idBarang" value="<?= $id_barang; ?>">
-	              <input id="inputChat" type="text" name="pesan" placeholder="Tulis pesan anda..." class="form-control message">
-	              <span class="input-group-btn">
-	              	<button id="kirimPesan" type="submit" name="submit" class="btn btn-primary btn-flat btnSend">Kirim</button>
-	              </span>
-	            </div>
-	        </div>
-	        <!-- /.box-footer-->
-	      </div>
-	      <!--/.direct-chat -->
-	    </div>
-	    <!-- /.col -->
-	  </div>
-    </div>
-
-<?php } ?>
-
 
 	<!-- Barang Terbaru -->
 
@@ -256,122 +211,53 @@
 	</div>
 	<!-- AKHIR DAFTAR AKUN MODAL-->
 
-	
-	<!-- script untuk jual barang -->
 
-	<script>
-		const chatBtn = document.getElementById('chatBtn');
-		chatBtn.addEventListener('click', () => {
-			let kotakChat = document.querySelector('.kotakChat');
-			let inputChat = document.getElementById('inputChat');
-			
-			<?php if (!in_array('login',  $this->session->userdata())): ?>
-				$('#loginModal').modal('show');
-			<?php else: ?>
-				inputChat.setAttribute('autofocus','');
-			<?php endif ?>
+	<!-- CHAT MODAL-->
+	<div class="modal fade" id="chatModal">
+		<div class="modal-dialog modal-lg">
+		  	<div class="modal-content">
+			    <div class="modal-header bg-primary text-white">
+			      	<h5 class="modal-title"><i class="fa fa-comment"></i> Chat Admin</h5>
+			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
+			    </div>
+		    	<div class="modal-body">
+		      		<!-- Chat Produk -->
+					<div class="container kotakChat"> <!-- tambahkan class hilang -->
+						<div class="col-md-12">
+					      <!-- DIRECT CHAT -->
+					      <div class="box box-primary direct-chat direct-chat-primary">
+					        <div class="box-header with-border">
+					          <h3 class="box-title">Chat dengan admin</h3>
+					        </div>
+					        <!-- /.box-header -->
+					        <div class="box-body">
+					          <!-- Conversations are loaded here -->
+					          <div class="direct-chat-messages" id="content">
 
-		});
+					          	<div id="pesan"></div>
 
-
-		/*fungsi jquery untuk chat*/
-		/*fungsi jquery untuk chat*/
-		let pesan      = document.getElementById('pesan');
-		const kirim    = document.querySelector('.btnSend');
-		const pesanTxt = document.querySelector('#inputChat');
-
-		kirim.addEventListener('click', () => {
-			sendTxtMessage(pesanTxt.value);
-		});
-
-		function ScrollDown(){
-			var elmnt = document.getElementById("content");
-		    var h     = elmnt.scrollHeight;
-		    elmnt.animate({scrollTop: h}, 1000);
-		}
-		window.onload = ScrollDown();
-
-		function DisplayMessage(message){
-			var Sender_Name = '<?php echo $this->session->userdata('nama'); ?>';
-			
-			var str ='<div class="direct-chat-msg right">';
-				str+='<div class="direct-chat-info clearfix">';
-				str+='<span class="direct-chat-name pull-right">'+Sender_Name ;
-				str+='</span><span class="direct-chat-timestamp pull-left"></span>'; //23 Jan 2:05 pm
-				str+='<div class="direct-chat-text">'+message;
-				str+='</div></div>';
-
-			$('#pesan').append(str);
-		}
-
-		//mengirim pesand dengan ajax tanpa reload
-		function sendTxtMessage(message){
-			var messageTxt = message.trim();
-			if(messageTxt != ''){
-				//console.log(message);
-		 		DisplayMessage(messageTxt);
-
-				var id_brg  = document.querySelector('.idBarang');
-				let id_barang = id_brg.value;
-				$.ajax({
-					dataType : "json",
-					type : 'post',
-					data : {id_barang : id_barang, messageTxt : messageTxt},
-					url  : '<?php echo base_url(); ?>chat/kirimPesan',
-					success:function(data)
-					{
-						GetChatHistory(id_barang);		 
-					},
-					error: function (jqXHR, status, err) {
-						alert('gagal kirim pesan')
-					}
-				});
-							
-				ScrollDown();
-				$('.message').val('');
-				$('.message').focus();
-			} else{
-				$('.message').focus();
-			}
-		}
-
-		//ambil history chat dari database
-		function GetChatHistory(id_barang){
-			$.ajax({
-                url   : '<?php echo base_url(); ?>shop/getChatHistory/'+id_barang,
-				success:function(data)
-				{
-					$('#pesan').html(data);
-					ScrollDown();	 
-				},
-				error: function (jqXHR, status, err) {
-				    console.log('error');
-				}
-			});
-		}
-
-		//load data chat tanpa reload
-		setInterval(function(){ 
-			var id_barang = document.getElementById('idBarang');
-			if(id_barang.value != ''){
-				GetChatHistory(id_barang.value);
-			}
-		}, 3000);
-
-
-		/*akhir fungsi chat*/
-
-
-
-		
-
-
-		var jualBarang = () => {
-		    <?php if (!in_array('login',  $this->session->userdata())): ?>
-				$('#loginModal').modal('show');
-			<?php else: ?>
-				window.location = "<?= base_url(); ?>barang/jual";
-			<?php endif ?>
-		}
-	</script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+					          </div>
+					          <!--/.direct-chat-messages-->
+					        </div>
+					        <!-- /.box-body -->
+					        <div class="box-footer">
+					            <div class="input-group">
+					              <!-- <input id="idBarang" type="text" hidden name="idBarang" class="idBarang" value="//<?= $id_barang; ?>"> -->
+					              <input id="receiver_id" type="text" hidden name="receiver_id" class="receiver_id" value="<?php echo $this->session->userdata('id'); ?>">
+					              <input id="inputChat" type="text" name="pesan" placeholder="Tulis pesan anda..." class="form-control message">
+					              <span class="input-group-btn">
+					              	<button id="kirimPesan" type="submit" name="submit" class="btn btn-primary btn-flat btnSend">Kirim</button>
+					              </span>
+					            </div>
+					        </div>
+					        <!-- /.box-footer-->
+					      </div>
+					      <!--/.direct-chat -->
+					    </div>
+					    <!-- /.col -->
+					</div>
+		    	</div>
+		  	</div>
+		</div>
+	</div>
+	<!-- AKHIR CHAT MODAL-->

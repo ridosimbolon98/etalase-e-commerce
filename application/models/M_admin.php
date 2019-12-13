@@ -67,6 +67,14 @@ class M_admin extends CI_Model{
 
 
 
+	//ambil data anggota dari database
+	function getAllAnggota($table){
+		return $this->db->get($table);
+	}
+
+
+
+
 
 
 

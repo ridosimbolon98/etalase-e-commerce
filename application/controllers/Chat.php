@@ -52,12 +52,22 @@ class Chat extends CI_Controller {
 	}
 
 	public function kirimPesan(){
-		$post = $this->input->post();
+		$receiver_id = $this->input->get('receiver_id');
+		$post        = $this->input->post();
 		 
+		// $data = Array(
+		// 	'id_barang'   => $post['id_barang'],
+		// 	'id_asal'     => $this->session->userdata('id'),
+		// 	'id_pengirim' => $this->session->userdata('id'),
+		// 	'id_penerima' => 1998,
+		// 	'pesan'       => $post['messageTxt'],
+		// 	'msg_date'    => date('Y-m-d H:i:s'),
+		// 	'ip_address'  => $this->input->ip_address()
+		// );
+
 		$data = Array(
-			'id_barang'   => $post['id_barang'],
 			'id_asal'     => $this->session->userdata('id'),
-			'id_pengirim' => $this->session->userdata('id'),
+			'id_pengirim' => $receiver_id,
 			'id_penerima' => 1998,
 			'pesan'       => $post['messageTxt'],
 			'msg_date'    => date('Y-m-d H:i:s'),

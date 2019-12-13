@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Jualin Id | Dashboard</title>
+  <title>Admin Jualin Id | Pesan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -18,9 +18,13 @@
   <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/dist/css/AdminLTE.min.css">
 
   <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/admin.css">
 
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/logo.png">
+  <style type="text/css">
+    .konten{
+      padding: 15px;
+    }
+  </style>
 
   <!-- Google Font -->
   <link rel="stylesheet"
@@ -313,7 +317,7 @@
 
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="active">
+        <li>
           <a href="<?= base_url(); ?>admin">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
@@ -325,7 +329,7 @@
           </a>
         </li>
 
-        <li>
+        <li class="active">
           <a href="<?= base_url(); ?>admin/pesan">
             <i class="fa fa-envelope"></i> <span>Pesan</span>
           </a>
@@ -347,3 +351,101 @@
     </section>
     <!-- /.sidebar -->
   </aside>
+
+
+
+
+
+
+
+
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+
+      <div class="row konten">
+
+        <div class="col-md-6 kotak-chat" id="chatSection">
+          <!-- DIRECT CHAT -->
+          <div class="box box-warning direct-chat direct-chat-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Pesan langsung</h3>
+
+              <div class="box-tools pull-right">
+                <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                        data-widget="chat-pane-toggle">
+                  <i class="fa fa-comments"></i></button>
+              </div>
+            </div>
+
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="direct-chat-messages" id="content">
+
+                <div id="pesan"></div>
+
+              </div>
+            </div>
+
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <div class="input-group">
+                <input type="hidden" id="ReciverId_txt">
+                <input type="hidden" id="ReciverName_txt">
+                <input type="text" name="message" placeholder="Ketik pesan anda ..." class="form-control message">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-warning btn-flat btnSend">Kirim</button>
+                </span>
+              </div>
+            </div>
+            <!-- /.box-footer-->
+          </div>
+          <!--/.direct-chat -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-6">
+          <!-- USERS LIST -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Anggota</h3>
+
+              <div class="box-tools pull-right">
+                <span class="label label-danger"><?php echo count($anggota); ?> Anggota</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list clearfix">
+
+              <?php foreach ($anggota as $a) { ?>  
+
+                <li class="pilihAnggota" id="<?= $a->id; ?>" title="<?= $a->nama; ?>" >
+                  <a id="<?= $a->id; ?>" title="<?= $a->nama; ?>" class="users-list-name agt" href="#"><?= $a->nama; ?></a>
+                  <span class="users-list-date"><?= $a->hp; ?></span>
+                </li>
+
+              <?php } ?>
+
+              </ul>
+              <!-- /.users-list -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!--/.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+
+
+  </div>
+  <!-- /.content-wrapper -->

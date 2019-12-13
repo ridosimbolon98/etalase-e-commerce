@@ -326,7 +326,7 @@
         </li>
 
         <li>
-          <a href="<?= base_url(); ?>admin">
+          <a href="<?= base_url(); ?>admin/pesan">
             <i class="fa fa-envelope"></i> <span>Pesan</span>
           </a>
         </li>

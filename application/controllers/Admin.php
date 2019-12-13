@@ -11,6 +11,7 @@ class Admin extends CI_Controller {
 			$this->load->helper('url');
 			$this->load->model('m_data');
 			$this->load->model('m_login');
+        	$this->load->model('m_chat');  
 			$this->load->model('m_admin');
 			$this->load->model('m_pesan');
 		}	
@@ -284,6 +285,92 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/footer',$data);
 	}
 
+	/*MENAMPILKAN HALAMAN PESAN*/
+	function pesan() {
+		$this->load->database();
+
+		$data['anggota'] = $this->m_admin->getAllAnggota('anggota')->result();
+
+		$this->load->view('admin/pesan', $data);
+		$this->load->view('admin/footer_pesan', $data);
+	}
+
+	/*MENGAMBIL CHAT HISTORY*/
+	public function getChatHistory(){
+        $this->load->database();
+        $receiver_id      = $this->input->get('id');
+        $admin            = 1998;
+        $Logged_sender_id = $this->session->userdata('id');
+
+        $chat             = $this->m_chat->getChat('chat', 'anggota', $receiver_id)->result();  
+
+        foreach ($chat as $msg):
+
+        ?>
+        <?php if($msg->id_asal == $receiver_id) { ?>           
+            <?php if($msg->id_pengirim == $admin) { ?>     
+                  <!-- Message. Default to the left --> 
+                    <div class="direct-chat-msg">
+                      <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-left"> Admin</span>
+                        <span class="direct-chat-timestamp pull-right"><?= $msg->msg_date; ?></span>
+                      </div>
+                      <!-- /.direct-chat-info -->
+                      <div class="direct-chat-text">
+                         <?= $msg->pesan ;?>
+                      </div>
+                      <!-- /.direct-chat-text -->
+                      
+                    </div>
+                    <!-- /.direct-chat-msg -->
+            <?php } else { ?>
+                    <!-- Message to the right -->
+                    <div class="direct-chat-msg right">
+                      <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-right"><?= $msg->nama; ?></span>
+                        <span class="direct-chat-timestamp pull-left"><?= $msg->msg_date; ?></span>
+                      </div>
+                      <!-- /.direct-chat-info -->
+                      <div class="direct-chat-text">
+                        <?= $msg->pesan; ?>
+                       </div>
+                       <!-- /.direct-chat-text -->
+                    </div>
+                    <!-- /.direct-chat-msg -->
+            <?php }
+
+        }
+        ?>
+
+<?php        
+        endforeach;   
+    }
+
+    /*KIRIM PESAN ADMIN*/
+    public function kirimPesan(){
+		$post = $this->input->post();
+		 
+		$data = Array(
+			'id_barang'   => 1,
+			'id_asal'     => $post['receiver_id'],
+			'id_pengirim' => $this->session->userdata('id'),
+			'id_penerima' => $post['receiver_id'],
+			'pesan'       => $post['messageTxt'],
+			'msg_date'    => date('Y-m-d H:i:s'),
+			'ip_address'  => $this->input->ip_address()
+		);
+  
+		$query    = $this->m_chat->sendChatToAdmin($data); 
+		$response = '';
+
+		if($query == true){
+			$response = ['status' => 1 ,'message' => '' ];
+		}else{
+			$response = ['status' => 0 ,'message' => 'sorry we re having some technical problems. please try again !' 						];
+		}
+             
+ 		echo json_encode($response);
+	}
 
 
 }

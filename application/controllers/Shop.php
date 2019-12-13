@@ -8,7 +8,7 @@ class Shop extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('m_data');
 		$this->load->model('m_login');	
-                $this->load->model('m_chat');  
+        $this->load->model('m_chat');  
 		$this->load->library('pagination');	
 	}
 
@@ -74,25 +74,6 @@ class Shop extends CI_Controller {
 		$data['kategori']      = $this->m_data->getAllKategori('kategori')->result();
 		$data['barangTerbaru'] = $this->m_data->getAllBarangTerbaru('barang','kategori')->result();
 
-        //ambil history chat tentang produk ber id $id_barang
-        if ($this->session->userdata('status') == 'login') {
-            $id_anggota    = $this->session->userdata('id');
-            $nama          = $this->m_chat->getPengirim('chat', 'anggota', $id_barang, $id_anggota)->result();
-            $data['nama_pengirim'] = $nama[0]; 
-            $data['chat']  = $this->m_chat->getAllChat('chat', 'anggota', $id_barang, $id_anggota)->result();  
-
-            $receiver_id   = 1998;
-            $Logged_sender_id = $this->session->userdata('id');
-             
-            // $data['chat'] = $this->m_chat->GetReciverChatHistory($receiver_id);
-            $data['receiver_id'] = $receiver_id;
-
-            //print_r($history);
-        } else {
-            $id_anggota    = 0;
-            $data['chat']  = $this->m_chat->getAllChat('chat', 'anggota', $id_barang, $id_anggota)->result();     
-        }
-
 		$this->load->view('shop/v_header_produk',$data);
 		$this->load->view('shop/v_produk',$data);
 		$this->load->view('shop/v_footer_produk',$data);
@@ -100,12 +81,15 @@ class Shop extends CI_Controller {
 
 
     //MENAMPILKAN CHAT HISTORY
-    public function getChatHistory($id_barang){
+    public function getChatHistory(){
         $this->load->database();
+
+        $receiver_id      = $this->input->get('receiver_id');
         $admin            = 1998;
         $Logged_sender_id = $this->session->userdata('id');
 
-        $chat             = $this->m_chat->getAllChat('chat', 'anggota', $id_barang, $Logged_sender_id)->result();  
+       // $chat             = $this->m_chat->getAllChat('chat', 'anggota', $id_barang, $Logged_sender_id)->result();  
+        $chat             = $this->m_chat->getAllChat('chat', 'anggota', $Logged_sender_id)->result();  
 
         foreach ($chat as $msg):
 

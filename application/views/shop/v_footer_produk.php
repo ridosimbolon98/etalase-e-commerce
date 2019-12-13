@@ -113,6 +113,128 @@
 <script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
 <script src="<?= base_url(); ?>assets/js/product_custom.js"></script>
 
+
+<!-- script untuk jual barang -->
+
+  <script>
+    const chatBtn = document.getElementById('chatBtn');
+    chatBtn.addEventListener('click', () => {
+      let kotakChat = document.querySelector('.kotakChat');
+      let inputChat = document.getElementById('inputChat');
+      
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        $('#loginModal').modal('show');
+      <?php else: ?>
+        $('#chatModal').modal('show');
+      <?php endif ?>
+
+    });
+
+
+    /*fungsi jquery untuk chat*/
+    /*fungsi jquery untuk chat*/
+    let pesan      = document.getElementById('pesan');
+    const kirim    = document.querySelector('.btnSend');
+    const pesanTxt = document.querySelector('#inputChat');
+
+    $('#inputChat').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+         sendTxtMessage($(this).val());
+      }
+    });
+
+    kirim.addEventListener('click', () => {
+      sendTxtMessage(pesanTxt.value);
+    });
+
+    function ScrollDown(){
+      var elmnt = document.getElementById("content");
+        var h     = elmnt.scrollHeight;
+        $('#content').animate({scrollTop: h}, 1000);
+    }
+    window.onload = ScrollDown();
+
+    function DisplayMessage(message){
+      var Sender_Name = '<?php echo $this->session->userdata('nama'); ?>';
+      
+      var str ='<div class="direct-chat-msg right">';
+        str+='<div class="direct-chat-info clearfix">';
+        str+='<span class="direct-chat-name pull-right">'+Sender_Name ;
+        str+='</span><span class="direct-chat-timestamp pull-left"></span>'; //23 Jan 2:05 pm
+        str+='<div class="direct-chat-text">'+message;
+        str+='</div></div>';
+
+      $('#pesan').append(str);
+    }
+
+    //mengirim pesand dengan ajax tanpa reload
+    function sendTxtMessage(message){
+      var messageTxt = message.trim();
+      if(messageTxt != ''){
+        //console.log(message);
+        DisplayMessage(messageTxt);
+
+        let receiver_id = $('#receiver_id').val();
+        $.ajax({
+          dataType : "json",
+          type : 'post',
+          data : {messageTxt : messageTxt, receiver_id : receiver_id},
+          url  : '<?php echo base_url(); ?>chat/kirimPesan?receiver_id='+receiver_id,
+          success:function(data)
+          {
+            GetChatHistory(receiver_id);     
+          },
+          error: function (jqXHR, status, err) {
+            alert('gagal kirim pesan')
+          }
+        });
+              
+        ScrollDown();
+        $('.message').val('');
+        $('.message').focus();
+      } else{
+        $('.message').focus();
+      }
+    }
+
+    //ambil history chat dari database
+    function GetChatHistory(receiver_id){
+      $.ajax({
+        url   : '<?php echo base_url(); ?>shop/getChatHistory?receiver_id='+receiver_id,
+        success:function(data)
+        {
+          $('#pesan').html(data);
+          ScrollDown();  
+        },
+        error: function (jqXHR, status, err) {
+            console.log('error');
+        }
+      });
+    }
+
+    //load data chat tanpa reload
+    setInterval(function(){ 
+      var receiver_id = $('#receiver_id').val();
+      if(receiver_id != ''){
+        GetChatHistory(receiver_id);
+      }
+    }, 3000);
+
+
+    /*akhir fungsi chat*/ 
+
+
+    var jualBarang = () => {
+        <?php if (!in_array('login',  $this->session->userdata())): ?>
+        $('#loginModal').modal('show');
+      <?php else: ?>
+        window.location = "<?= base_url(); ?>barang/jual";
+      <?php endif ?>
+    }
+  </script>
+
+
 </body>
 
 </html>

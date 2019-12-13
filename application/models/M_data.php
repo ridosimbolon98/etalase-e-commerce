@@ -18,6 +18,12 @@ class M_data extends CI_Model{
 		return $this->db->query($sql);
 	}
 
+	//ambil data semua barang dari database berdasarkan id penjual
+	function getBarangAnggota($table, $table2, $id_penjual){
+		$sql = "SELECT * FROM `$table` JOIN `$table2` ON `$table`.`kategori`=`$table2`.`id_kat` WHERE `$table`.`penjual`='$id_penjual' ";
+		return $this->db->query($sql);
+	}
+
 	function getSemuaBarang($table, $table2){
 		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` ";
 		return $this->db->query($sql);
