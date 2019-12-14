@@ -275,9 +275,9 @@ window.onload = ScrollDown();
 function DisplayMessage(message){
   var Sender_Name = 'Admin';
   
-    var str = '<div class="direct-chat-msg right">';
+    var str = '<div class="direct-chat-msg left">';
         str+= '<div class="direct-chat-info clearfix">';
-         str+='<span class="direct-chat-name pull-right">'+Sender_Name ;
+         str+='<span class="direct-chat-name pull-left">'+Sender_Name ;
          str+='</span><span class="direct-chat-timestamp pull-left"></span>'; //23 Jan 2:05 pm
          str+='</div>';
          str+='<div class="direct-chat-text">'+message;

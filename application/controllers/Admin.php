@@ -282,7 +282,6 @@ class Admin extends CI_Controller {
 		$data['langganan']      = $this->m_login->getAllLangganan('langganan')->result();
 
 		$this->load->view('admin/langganan',$data);
-		$this->load->view('admin/footer',$data);
 	}
 
 	/*MENAMPILKAN HALAMAN PESAN*/
@@ -351,7 +350,6 @@ class Admin extends CI_Controller {
 		$post = $this->input->post();
 		 
 		$data = Array(
-			'id_barang'   => 1,
 			'id_asal'     => $post['receiver_id'],
 			'id_pengirim' => $this->session->userdata('id'),
 			'id_penerima' => $post['receiver_id'],

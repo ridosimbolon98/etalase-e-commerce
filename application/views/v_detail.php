@@ -200,28 +200,59 @@
 
 				<div class="col-sm-6 m-3">
 					<div class="text-center">
-						<h4>Daftar barang</h4>
+						<h4>Detail barang</h4>
 					</div>
 					<!-- menampilkan daftar barang yg dijual akun session -->
 					<div class="row">
-						<?php foreach ($barang as $brg) { ?>
-							<div class="col-sm-4 p-2 text-center mb-3">
-								<a href="<?php echo base_url(); ?>barang/detail/<?= $brg->id; ?>">	
+						<?php foreach ($detail as $row) { ?>
+							<div class="col-sm-6 p-2 text-center mb-3">
+								<a href="<?php echo base_url(); ?>barang/detail/<?= $row->id; ?>">	
 									<div class="product_image d-flex flex-column align-items-center justify-content-center">
-										<img class="img-fluid" src="<?= base_url(); ?>img/<?= json_decode($brg->gambar,true)[0]; ?>" alt="Gambar Barang">
+										<img class="img-fluid" src="<?= base_url(); ?>img/<?= json_decode($row->gambar,true)[0]; ?>" alt="Gambar Barang">
 									</div>
 								</a>
-								<div class="" hidden><?= $brg->harga ?></div>
-								<div class="text-danger">
-									<b><?= 'Rp '.number_format($brg->harga,2,",","."); ?></b>
-								</div>
+							</div>
+							<div class="col-sm-6 p-2 text-center">
 								<div class="">
-									<div>
-										<a class="text-dark" href="<?php echo base_url(); ?>barang/detail/<?= $brg->id; ?>"><?= $brg->nama_barang; ?></a>
-									</div>
+									<span class="text-primary">Kategori : <?= $row->nama_kategori; ?></span>
+								</div>
+								<div class="pb-3">
+									<a class="text-dark" href="<?php echo base_url(); ?>barang/detail/<?= $row->id; ?>"><?= $row->nama_barang; ?></a>
 								</div>
 								<div>
-									<a href="<?php echo base_url(); ?>barang/detail/<?= $brg->id; ?>" class="btn btn-primary">Detail</a>
+									<p style="font-style: italic;"><?= $row->deskripsi; ?></p>
+								</div>
+								<div class="text-danger pb-3">
+									<b><?= 'Rp '.number_format($row->harga,2,",","."); ?></b>
+								</div>
+								<div>
+									<label>Status : </label>
+									<?php if($row->status == 'ada') { ?>
+									  <form method="post" action="<?= base_url(); ?>barang/status/<?= $row->id; ?>">
+									  	<div class="form-check form-check-inline mx-4">
+											<input id="ada1" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+											<label class="form-check-label pl-0" for="ada1">Ada</label>
+									  	</div>
+									  	<div class="form-check form-check-inline ml-4">
+											<input id="terjual1" class="form-check-input" type="radio" name="status" value="terjual">
+											<label class="form-check-label pl-0" for="terjual1">Terjual</label>
+									  	</div>
+									  	<br><button class="btn btn-success status" name="submit" type="submit" onclick="return confirm('Apakah anda ingin mengubah status barang ?')">Ubah status</button>
+									  </form>
+
+									<?php } else { ?>
+									  <form method="post" action="<?= base_url(); ?>barang/status/<?= $row->id; ?>">
+									  	<div class="form-check form-check-inline mx-4">
+											<input id="ada2" class="form-check-input" type="radio" name="status" value="ada">
+											<label class="form-check-label pl-0" for="ada2">Ada</label>
+									  	</div>
+									  	<div class="form-check form-check-inline ml-4">
+											<input id="terjual2" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+											<label class="form-check-label pl-0" for="terjual2">Terjual</label>
+									  	</div>
+										<br><button class="btn btn-success status" name="submit" type="submit" onclick="return confirm('Apakah anda ingin mengubah status barang ?')">Ubah status</button>
+									  </form>
+									<?php } ?>
 								</div>
 							</div>
 						<?php } ?>
@@ -550,9 +581,20 @@
 		window.location = "<?= base_url('profil'); ?>";
 	});
 
+
+	//script ubah status
+	// const btnStatus = document.querySelector('.status');
+	// btnStatus.addEventListener('click', () => {
+	// 	var r = confirm("Apakah anda yakin mengubah status barang ?\njika iya tekan OK, jika tidak tekan cancel!");
+	// 	if (r == true) {
+	// 	    txt = "You pressed OK!";
+	// 	} else {
+	// 	    txt = "You pressed Cancel!";
+	// 	}
+	// 	document.getElementById("demo").innerHTML = txt;
+	// });
+
 </script>
-
-
 
 </body>
 

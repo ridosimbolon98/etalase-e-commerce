@@ -22,8 +22,8 @@ class Profil extends CI_Controller {
 		$id_anggota = $this->session->userdata('id');
 
 		//ambal data kaytegori barang dari model
-		$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
 		$data['barang']   = $this->m_data->getBarangAnggota('barang','kategori',$id_anggota)->result();
+		$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
 		$data['anggota']  = $this->m_login->getDataAnggota('anggota',$id_anggota)->result();
 		
 		$this->load->view('v_profil.php', $data);

@@ -8,13 +8,13 @@ class M_data extends CI_Model{
 
     //ambil data semua barang dari database tanpa paginasi
 	function tampilBarang($table, $table2){
-		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` ";
+		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` AND `$table`.`status`= 'ada' ";
 		return $this->db->query($sql);
 	}
     
     //ambil data semua barang dari database dengan paginasi
 	function getAllBarang($table, $table2, $limit, $start){
-		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` LIMIT $start, $limit";
+		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` AND `$table`.`status`= 'ada' LIMIT $start, $limit";
 		return $this->db->query($sql);
 	}
 
@@ -31,7 +31,7 @@ class M_data extends CI_Model{
 
 	//ambil data barang terbaru dari database
 	function getAllBarangTerbaru($table, $table2){
-		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` ORDER BY `$table`.`id` DESC LIMIT 6 ";
+		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` AND `$table`.`status`= 'ada' ORDER BY `$table`.`id` DESC LIMIT 6 ";
 		return $this->db->query($sql);
 	}
 
@@ -42,7 +42,7 @@ class M_data extends CI_Model{
 
 	//ambil jumlah barang dari database
 	function getJlhBarang($table){
-		$sql = "SELECT nama_barang FROM `$table` ";
+		$sql = "SELECT nama_barang FROM `$table`  WHERE `$table`.`status`= 'ada' ";
 		return $this->db->query($sql);
 	}
 
@@ -110,6 +110,21 @@ class M_data extends CI_Model{
 		return $this->db->query($sql);
 	}
 
+
+	/*FUNGSI UNTUK PROFIL ANGGOTA*/
+	function getDetail($table,$table2,$where) {
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join($table2, $table.'.kategori='.$table2.'.id_kat');
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
+	//update status barang
+	function updateStatus($table,$statData,$where) {
+		$this->db->where($where);
+		return $this->db->update($table, $statData);
+	}
 
 
 

@@ -31,6 +31,7 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->database();
+
 		//ambali data barang dari model
 		$data['kategori']      = $this->m_data->getAllKategori('kategori')->result();
 		$data['barang']        = $this->m_data->tampilBarang('barang','kategori')->result();

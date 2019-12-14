@@ -99,5 +99,49 @@ class Barang extends CI_Controller {
 	}
 
 
+	//menampilkan detail barang yang dijual anggota
+	function detail($idBarang) {
+		$this->load->database();
+
+		$id_anggota = $this->session->userdata('id');
+		$where = Array('id' => $idBarang);
+
+		$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
+		$data['anggota']  = $this->m_login->getDataAnggota('anggota',$id_anggota)->result();
+		$data['detail']   = $this->m_data->getDetail('barang','kategori', $where)->result();
+
+		$this->load->view('v_detail', $data);
+	}
+
+
+	//ubah status barang
+	function status($idBarang) {
+		$id_anggota = $this->session->userdata('id');
+
+		//ambil data status dari post form
+		$status = $this->input->post('status');
+
+		$statData = array ('status' => $status);
+		$where = Array('id' => $idBarang);
+
+		$update = $this->m_data->updateStatus('barang', $statData, $where);
+
+		if ($update) {
+			echo "<script>alert('Status barang berhasil diperbaharui');</script>";
+			echo "<script>location='".base_url('barang/detail/').$idBarang."';</script>";
+		} else {
+			echo "<script>alert('Status barang gagal diperbaharui');</script>";
+			echo "<script>location='".base_url('barang/detail/').$idBarang."';</script>";
+		}
+		
+   
+		$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
+		$data['anggota']  = $this->m_login->getDataAnggota('anggota',$id_anggota)->result();
+		$data['detail']   = $this->m_data->getDetail('barang','kategori', $where)->result();
+
+		$this->load->view('v_detail', $data);
+	}
+
+
 
 }
