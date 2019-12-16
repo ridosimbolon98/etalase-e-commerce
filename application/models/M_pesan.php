@@ -12,7 +12,12 @@ class M_pesan extends CI_Model{
 	}
 
 	//mengambil data feedback
-	function getAllfeedback($table){
+	function getAllfeedback($table,$start,$limit){
+		return $this->db->get($table,$start,$limit);
+	}
+
+	//mengambil data jlh feedback
+	function getJlhfeedback($table){
 		return $this->db->get($table);
 	}
 

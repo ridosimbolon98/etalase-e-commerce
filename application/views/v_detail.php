@@ -581,19 +581,6 @@
 		window.location = "<?= base_url('profil'); ?>";
 	});
 
-
-	//script ubah status
-	// const btnStatus = document.querySelector('.status');
-	// btnStatus.addEventListener('click', () => {
-	// 	var r = confirm("Apakah anda yakin mengubah status barang ?\njika iya tekan OK, jika tidak tekan cancel!");
-	// 	if (r == true) {
-	// 	    txt = "You pressed OK!";
-	// 	} else {
-	// 	    txt = "You pressed Cancel!";
-	// 	}
-	// 	document.getElementById("demo").innerHTML = txt;
-	// });
-
 </script>
 
 </body>

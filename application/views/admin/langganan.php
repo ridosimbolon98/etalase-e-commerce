@@ -320,6 +320,12 @@
         </li>
 
         <li>
+          <a href="<?= base_url(); ?>admin/daftarBarang">
+            <i class="fa fa-cube"></i> <span>Daftar Barang</span>
+          </a>
+        </li>
+
+        <li>
           <a href="<?= base_url(); ?>admin/barangBaru">
             <i class="fa fa-cube"></i> <span>Barang Baru</span>
           </a>
@@ -355,12 +361,11 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
-
 <!-- TABEL PELANGGAN -->
   <section class="content-header">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Data Pelanggan</h3>
+        <h3 class="box-title">Data Subscribers</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -384,14 +389,21 @@
         </table>
       </div>
       <!-- /.box-body -->
+
+      <!-- Paginasi feedback -->
+      <div class="row paginasi">
+          <div class="col">
+            <!--Tampilkan pagination-->
+            <?php echo $pagination; ?>
+          </div>
+      </div>
+
     </div>
     <!-- /.box -->
   </section>
 
-
-
-  </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 
 <!-- footer -->

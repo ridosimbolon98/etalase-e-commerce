@@ -85,7 +85,12 @@ class M_login extends CI_Model{
 	}
 
 	//mengambil data langganan
-	function getAllLangganan($table){
+	function getAllLangganan($table,$start,$limit){
+		return $this->db->get($table,$start,$limit);
+	}
+
+	//mengambil data jlh langganan
+	function getJlhLangganan($table){
 		return $this->db->get($table);
 	}
 

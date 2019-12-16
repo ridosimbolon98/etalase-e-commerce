@@ -320,8 +320,14 @@
         </li>
 
         <li>
+          <a href="<?= base_url(); ?>admin/daftarBarang">
+            <i class="fa fa-cubes"></i> <span>Daftar Barang</span>
+          </a>
+        </li>
+
+        <li>
           <a href="<?= base_url(); ?>admin/barangBaru">
-            <i class="fa fa-cube"></i> <span>Barang Baru</span>
+            <i class="fa fa-cube"></i> <span>Daftar Barang Baru</span>
           </a>
         </li>
 

@@ -38,11 +38,11 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <a class="text-bc" href="">
-              <span class="info-box-icon bg-red"><i class="fa fa-line-chart"></i></span>
+              <span class="info-box-icon bg-red"><i class="fa fa-cart-plus"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Pengunjung</span>
-                <span class="info-box-number">4.010</span>
+                <span class="info-box-text">Barang Ada</span>
+                <span class="info-box-number"><?php echo $barang_ada; ?></span>
               </div>
             </a>
             <!-- /.info-box-content -->
@@ -72,12 +72,12 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <a class="text-bc" href="">
-              <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>
+            <a class="text-bc" href="<?= base_url(); ?>admin/barangBaru">
+              <span class="info-box-icon bg-yellow"><i class="fa fa-cube"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Daftar Anggota</span>
-                <span class="info-box-number"><?php echo $anggota; ?></span>
+                <span class="info-box-text">Barang Baru</span>
+                <span class="info-box-number"><?php echo $barang_baru; ?></span>
               </div>
             </a>
             <!-- /.info-box-content -->
@@ -99,7 +99,7 @@
               <span class="info-box-icon bg-aqua-marine"><i class="fa fa-bell"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Daftar Berlangganan</span>
+                <span class="info-box-text">Berlangganan</span>
                 <span class="info-box-number"><?php echo $langganan; ?></span>
               </div>
             </a>
@@ -130,12 +130,12 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <a class="text-bc" href="">
+            <a class="text-bc" href="<?= base_url(); ?>admin/pesan">
               <span class="info-box-icon bg-lime-green"><i class="fa fa-envelope"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">Pesan</span>
-                <span class="info-box-number">0</span>
+                <span class="info-box-number"><?php echo $pesan; ?></span>
               </div>
             </a>
             <!-- /.info-box-content -->
@@ -147,11 +147,11 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <a class="text-bc" href="">
-              <span class="info-box-icon bg-light-yellow"><i class="ion ion-ios-people-outline"></i></span>
+              <span class="info-box-icon bg-light-yellow"><i class="ion ion-ios-people"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Kosong</span>
-                <span class="info-box-number">0</span>
+                <span class="info-box-text">Anggota</span>
+                <span class="info-box-number"><?php echo $anggota; ?></span>
               </div>
             </a>
             <!-- /.info-box-content -->

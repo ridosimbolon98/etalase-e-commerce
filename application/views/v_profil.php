@@ -286,7 +286,7 @@
 								<li><a href="https://www.facebook.com/rido.simbolon.54" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
 								<li><a href="https://twitter.com/MartupaSimbolon?s=06" target="_blank"><i class="fab fa-twitter" target="_blank"></i></a></li>
 								<li><a href="https://www.youtube.com/channel/UCjzo6071wdnJiWEKnfWSMoA" target="_blank"><i class="fab fa-youtube" target="_blank"></i></a></li>
-								<li><a href="https://s.id/cektemperamen" target="_blank"><i class="fab fa-google"></i></a></li>
+								<li><a href="https://www.melekdata.com/" target="_blank"><i class="fab fa-google"></i></a></li>
 								<li><a href="https://www.instagram.com/marthupa.simbolon/" target="_blank"><i class="fab fa-instagram"></i></a></li>
 							</ul>
 						</div>

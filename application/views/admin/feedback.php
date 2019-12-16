@@ -320,6 +320,12 @@
         </li>
 
         <li>
+          <a href="<?= base_url(); ?>admin/daftarBarang">
+            <i class="fa fa-cube"></i> <span>Daftar Barang</span>
+          </a>
+        </li>
+
+        <li>
           <a href="<?= base_url(); ?>admin/barangBaru">
             <i class="fa fa-cube"></i> <span>Barang Baru</span>
           </a>
@@ -349,17 +355,61 @@
   </aside>
 
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Daftar Feedback Pengunjung
-      </h1>
-      <?php foreach ($feedback as $row) {
-        echo "<p>".$row->pesan."</p>";
-      } ?>
-    </section>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
 
-  </div>
-  <!-- /.content-wrapper -->
+  <!-- TABEL FEEDBACK -->
+  <section class="content-header">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Data Feedback</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>No</th>
+            <th>Pengirim</th>
+            <th>Pesan Feedback</th>
+            <th>Email</th>
+            <th>No HP</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <?php $no=1; foreach ($feedback as $row) { ?>  
+            <tr>
+              <td><?= $no++ ?></td>
+              <td>
+                <?= $row->nama_pengirim ?>
+              </td>
+              <td>
+                <?= $row->pesan ?>
+              </td>
+              <td>
+                <?= $row->email_pengirim ?>
+              </td>
+              <td>
+                <?= $row->no_hp_pengirim ?>
+              </td>
+            </tr>
+          <?php } ?>
+        </table>
+      </div>
+      <!-- /.box-body -->
+
+      <!-- Paginasi feedback -->
+      <div class="row paginasi">
+          <div class="col">
+            <!--Tampilkan pagination-->
+            <?php echo $pagination; ?>
+          </div>
+      </div>
+      
+    </div>
+    <!-- /.box -->
+  </section>
+
+</div>
+<!-- /.content-wrapper -->

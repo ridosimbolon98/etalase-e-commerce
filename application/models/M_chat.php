@@ -34,6 +34,13 @@ class M_chat extends CI_Model{
 	}	
 
 
+	//ambil jumlah pesan yang belum dibaca
+	function getPesan($table) {
+		$where = array('status' => 0);
+		return $this->db->get_where($table,$where);
+	}
+
+
 
 
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Jualin Id | Detail Barang Baru</title>
+  <title>Admin Jualin Id | Detail Barang</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -361,11 +361,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Detail Barang Baru
+        Detail Barang
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?= base_url(); ?>admin"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="<?= base_url(); ?>admin/barangBaru">Barang Baru</a></li>
+        <li><a href="<?= base_url(); ?>admin/daftarBarang">Daftar Barang</a></li>
+        <li class="active"><a href="<?= base_url(); ?>admin/detailBarang">Detail Barang</a></li>
       </ol>
     </section>
 
@@ -379,7 +380,7 @@
           <div class="row box-shadow-gambar">
 
           <?php 
-          foreach ($detail_barang_baru as $dbb) { 
+          foreach ($detail_barang as $dbb) { 
             for ($i=0; $i < count(json_decode($dbb->gambar,true)); $i++) { 
           ?>
 
@@ -406,17 +407,41 @@
               <div class="text-center detail box-shadow-detail">
                 <span class="kategori"><?= $row->nama_kategori; ?></span>
                 <h3><?= $row->nama_barang; ?></h3>
-                <p class="deskripsi-produk"><?= $row->deskripsi_barang; ?></p>
-                <h4><b><?= 'Rp '. number_format($row->harga_barang,2,",","."); ?></b></h4>
-                <div>
-                  <a onclick="return confirm('Apakah anda yakin verifikasi data barang ?')" href="<?= base_url(); ?>admin/verifikasi/<?= $id_tmp; ?>" class="btn btn-success">Verifikasi</a>
-                  <a onclick="return confirm('Apakah anda yakin membatalkan data barang ?')" href="<?= base_url(); ?>admin/batalkan/<?= $id_tmp; ?>" class="btn btn-danger">Batalkan</a>
-                </div>
+                <p class="deskripsi-produk"><?= $row->deskripsi; ?></p>
+                <h4><b><?= 'Rp '. number_format($row->harga,2,",","."); ?></b></h4>
                 <hr>
 
-            <?php } ?>
+                <div>
+                  <label>Status Barang :</label>
+                  <?php if($row->status == 'ada') { ?>
+                    <form class="radio-flex" method="post" action="<?= base_url(); ?>admin/status/<?= $idBarang; ?>">
+                      <div class="form-check form-check-inline mx-4">
+                        <input id="ada1" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+                        <label class="form-check-label pl-0" for="ada1">Ada</label>
+                      </div>
+                      <div class="form-check form-check-inline ml-4">
+                        <input id="terjual1" class="form-check-input" type="radio" name="status" value="terjual">
+                        <label class="form-check-label pl-0" for="terjual1">Terjual</label>
+                      </div>
+                        <br><button class="btn btn-primary" name="submit" type="submit" onclick="return confirm('Apakah anda ingin mengubah status barang ?')"><i class="fa fa-edit"></i> Ubah status barang</button>
+                    </form>
 
-            <?php foreach ($detail_barang_baru as $row) {  ?>
+                  <?php } else { ?>
+                    <form class="radio-flex" method="post" action="<?= base_url(); ?>admin/status/<?= $idBarang; ?>">
+                      <div class="form-check form-check-inline mx-4">
+                        <input id="ada2" class="form-check-input" type="radio" name="status" value="ada">
+                        <label class="form-check-label pl-0" for="ada2">Ada</label>
+                      </div>
+                      <div class="form-check form-check-inline ml-4">
+                        <input id="terjual2" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+                        <label class="form-check-label pl-0" for="terjual2">Terjual</label>
+                      </div>
+                        <br><button class="btn btn-primary" name="submit" type="submit" onclick="return confirm('Apakah anda ingin mengubah status barang ?')"><i class="fa fa-edit"></i> Ubah status barang</button>
+                    </form>
+                  <?php } ?>
+                </div>
+
+                <hr>
 
                 <div>
                   <span class="kategori">Data Penjual</span>

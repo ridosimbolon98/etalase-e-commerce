@@ -14,6 +14,7 @@ class Admin extends CI_Controller {
         	$this->load->model('m_chat');  
 			$this->load->model('m_admin');
 			$this->load->model('m_pesan');
+			$this->load->library('pagination');	
 		}	
 					
 	}
@@ -28,18 +29,102 @@ class Admin extends CI_Controller {
 			'status' => 'terjual'
 		);
 
+		$ada = array (
+			'status' => 'ada'
+		);
+
 		//ambal data kaytegori barang dari model
 		$data['anggota']        = $this->m_data->getAllAnggota('anggota')->num_rows();
 		$data['barang']         = $this->m_admin->getAllBarang('barang','kategori')->num_rows();
+		$data['barang_ada']     = $this->m_admin->getAllBarangAda('barang',$ada)->num_rows();
 		$data['barang_terjual'] = $this->m_data->getAllBarangTerjual('barang',$where)->num_rows();
+		$data['barang_baru']    = $this->m_admin->getAllBarangBaru('tmp_barang','anggota')->num_rows();
 		$data['kategori']       = $this->m_data->getAllKategori('kategori')->result();
-		$data['feedback']       = $this->m_pesan->getAllFeedback('feedback')->num_rows();
-		$data['langganan']      = $this->m_login->getAllLangganan('langganan')->num_rows();
+		$data['feedback']       = $this->m_pesan->getJlhFeedback('feedback')->num_rows();
+		$data['langganan']      = $this->m_login->getJlhLangganan('langganan')->num_rows();
+		$data['pesan']          = $this->m_chat->getPesan('chat')->num_rows(); //jumlah pesan yang belum dibaca
 		// $data['pesan']          = $this->m_pesan->getAllPesan('pesan')->result();
 
 		$this->load->view('admin/header',$data);
 		$this->load->view('admin/index',$data);
 		$this->load->view('admin/footer',$data);
+	}
+
+	//menampilkan daftar barang yang masih ready atau status ada
+	function daftarBarang() {
+		$this->load->database();
+
+		//konfigurasi pagination
+        $config['base_url']    = base_url().'admin/daftarBarang'; //site url
+        $config['total_rows']  = $this->m_admin->getAllBarang('barang','kategori')->num_rows();
+        $config['per_page']    = 5; //show record per halaman
+        $config["uri_segment"] = 3;  // uri parameter
+        $choice                = $config["total_rows"] / $config["per_page"];
+        $config["num_links"]   = floor($choice);
+ 
+        // Membuat Style pagination untuk BootStrap v4
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+ 
+        $this->pagination->initialize($config);
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+          
+        $data['barang']     = $this->m_admin->ambilSemuaBarang('barang','kategori',$config["per_page"], $data['page'])->result(); 
+        $data['pagination'] = $this->pagination->create_links();
+
+		$this->load->view('admin/daftar_barang',$data);
+		$this->load->view('admin/footer',$data);
+	}
+
+	//menampilkan detail barang 
+	function detailBarang($id){
+		$this->load->database();
+
+		//ambil data detail barang dan kategori 
+		$data['detail_barang'] = $this->m_admin->getDetBrgKat('barang','kategori','anggota',$id)->result();
+
+		$data['idBarang'] = $id;
+
+		$this->load->view('admin/detail_barang',$data);
+		$this->load->view('admin/footer',$data);
+	}
+
+	//ubah status barang
+	function status($idBarang) {
+		$this->load->database();
+
+		//ambil data status dari post form
+		$status   = $this->input->post('status');
+
+		$statData = array ('status' => $status);
+		$where    = array('id' => $idBarang);
+
+		$update   = $this->m_data->updateStatus('barang', $statData, $where);
+
+		if ($update) {
+			echo "<script>alert('Status barang berhasil diperbaharui');</script>";
+			echo "<script>location='".base_url('admin/detailBarang/').$idBarang."';</script>";
+		} else {
+			echo "<script>alert('Status barang gagal diperbaharui');</script>";
+			echo "<script>location='".base_url('admin/detailBarang/').$idBarang."';</script>";
+		}
+	
 	}
 
 	//menampilkan daftar barang baru yg perlu diverifikasi
@@ -269,7 +354,39 @@ class Admin extends CI_Controller {
 	function fp () {
 		$this->load->database();
 
-		$data['feedback']       = $this->m_pesan->getAllFeedback('feedback')->result();
+		//konfigurasi pagination
+        $config['base_url']    = base_url().'admin/fp'; //site url
+        $config['total_rows']  = $this->m_pesan->getJlhFeedback('feedback')->num_rows();
+        $config['per_page']    = 15; //show record per halaman
+        $config["uri_segment"] = 3;  // uri parameter
+        $choice                = $config["total_rows"] / $config["per_page"];
+        $config["num_links"]   = floor($choice);
+ 
+        // Membuat Style pagination untuk BootStrap v4
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+ 
+        $this->pagination->initialize($config);
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+          
+        $data['feedback']   = $this->m_pesan->getAllFeedback('feedback',$config["per_page"], $data['page'])->result(); 
+        $data['pagination'] = $this->pagination->create_links();
 
 		$this->load->view('admin/feedback',$data);
 		$this->load->view('admin/footer',$data);
@@ -279,7 +396,39 @@ class Admin extends CI_Controller {
 	function langganan () {
 		$this->load->database();
 
-		$data['langganan']      = $this->m_login->getAllLangganan('langganan')->result();
+		//konfigurasi pagination
+        $config['base_url']    = base_url().'admin/langganan'; //site url
+        $config['total_rows']  = $this->m_login->getJlhLangganan('langganan')->num_rows();
+        $config['per_page']    = 15; //show record per halaman
+        $config["uri_segment"] = 3;  // uri parameter
+        $choice                = $config["total_rows"] / $config["per_page"];
+        $config["num_links"]   = floor($choice);
+ 
+        // Membuat Style pagination untuk BootStrap v4
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+ 
+        $this->pagination->initialize($config);
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+          
+        $data['langganan']  = $this->m_login->getAllLangganan('langganan',$config["per_page"], $data['page'])->result(); 
+        $data['pagination'] = $this->pagination->create_links();
 
 		$this->load->view('admin/langganan',$data);
 	}

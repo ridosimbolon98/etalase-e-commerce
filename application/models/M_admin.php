@@ -8,8 +8,25 @@ class M_admin extends CI_Model{
 
     //ambil data semua barang dari database dengan paginasi
 	function getAllBarang($table, $table2){
-		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` ";
-		return $this->db->query($sql);
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join($table2, $table.'.kategori='.$table2.'.id_kat');
+		return $this->db->get();
+	}
+
+	//ambil semua barang dari database dengan paginasi
+	function ambilSemuaBarang($table, $table2, $start, $limit){
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join($table2, $table.'.kategori='.$table2.'.id_kat');
+		$this->db->limit($start,$limit);
+		return $this->db->get();
+	}
+
+
+	//ambil data semua barang ada dari database
+	function getAllBarangAda($table,$where){
+		return $this->db->get_where($table,$where);
 	}
 
 	//ambil id barang terakhir
@@ -73,7 +90,15 @@ class M_admin extends CI_Model{
 	}
 
 
-
+	//ambil data detail barang dan kategori berdasarkan id
+	function getDetBrgKat($table, $table2, $table3, $id) {
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join($table2, $table.'.kategori='.$table2.'.id_kat');
+		$this->db->join($table3, $table.'.penjual='.$table3.'.id');
+		$this->db->where($table.'.id='.$id);
+		return $this->db->get();
+	}
 
 
 
