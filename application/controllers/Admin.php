@@ -105,6 +105,54 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/footer',$data);
 	}
 
+	//menampilkan edit barang 
+	function editBarang($id){
+		$this->load->database();
+
+		//ambil data detail barang dan kategori 
+		$data['detail_barang'] = $this->m_admin->getDetBrgKat('barang','kategori','anggota',$id)->result();
+
+		$data['idBarang'] = $id;
+
+		$this->load->view('admin/edit_barang',$data);
+		$this->load->view('admin/footer',$data);
+	}
+
+	//edit barang aksi
+	function editAksi() {
+		$this->load->database();
+
+		//cek jika di submit
+		if ($this->input->post('submit')) {
+			$idBarang  = strip_tags($this->input->post('idBarang'));
+			$nama      = strip_tags($this->input->post('nama'));
+			$deskripsi = strip_tags($this->input->post('deskripsi'));
+			$kategori  = strip_tags($this->input->post('kategori'));
+			$harga     = strip_tags($this->input->post('harga'));
+			$status    = strip_tags($this->input->post('status'));
+
+			//data yang mau diupdate
+			$data = array(
+		        'nama_barang' => $nama,
+		        'deskripsi'   => $deskripsi,
+		        'harga'       => $harga,
+		        'status'      => $status,
+		        'kategori'    => $kategori
+			);
+
+			$update = $this->m_admin->updateDataBarang('barang',$idBarang,$data);
+
+			if ($update) {
+				echo "<script>alert('Data barang berhasil diperbaharui');</script>";
+				echo "<script>location='".base_url()."admin/editBarang/".$idBarang."';</script>";
+			} else {
+				echo "<script>alert('Gagal memperbaharui data barang');</script>";
+				echo "<script>location='".base_url()."admin/editBarang".$idBarang."';</script>";
+			} 
+
+		}
+	}
+
 	//ubah status barang
 	function status($idBarang) {
 		$this->load->database();

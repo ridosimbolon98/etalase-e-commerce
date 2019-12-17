@@ -375,27 +375,27 @@
 		      		<form method="post" action="<?php echo base_url(); ?>login/daftar">
 		        		<div class="form-group">
 				          	<label for="title">Nama</label>
-				          	<input type="text" name="nama" autofocus class="form-control" required placeholder="Nama">
+				          	<input type="text" name="nama" autofocus class="form-control text-dark" required placeholder="Nama">
 		        		</div>
 		        		<div class="form-group">
 				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" class="form-control" required placeholder="Username/Email">
+				          	<input type="email" name="username" class="form-control text-dark" required placeholder="Username/Email">
 		        		</div>
 				        <div class="form-group">
 				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control" required placeholder="Password">
+				          	<input type="password" name="password" class="form-control text-dark" required placeholder="Password">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">Konfirmasi Password</label>
-				          	<input type="password" name="konfirmasi_password" class="form-control" required placeholder="Konfirmasi Password">
+				          	<input type="password" name="konfirmasi_password" class="form-control text-dark" required placeholder="Konfirmasi Password">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">Alamat</label>
-				          	<input type="text" name="alamat" class="form-control" required placeholder="Alamat">
+				          	<input type="text" name="alamat" class="form-control text-dark" required placeholder="Alamat">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">No.HP</label>
-				          	<input type="text" name="no_hp" class="form-control" required placeholder="+62 8**********">
+				          	<input type="text" name="no_hp" class="form-control text-dark" required placeholder="08**********">
 				        </div>
 
 				        <div class="modal-footer">

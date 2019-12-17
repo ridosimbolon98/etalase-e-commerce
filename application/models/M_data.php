@@ -6,6 +6,11 @@ class M_data extends CI_Model{
         parent::__construct();
     }
 
+    //ambil data anggota dari database
+	function getAnggota($table,$where){
+		return $this->db->get_where($table,$where);
+	}
+
     //ambil data semua barang dari database tanpa paginasi
 	function tampilBarang($table, $table2){
 		$sql = "SELECT * FROM `$table` JOIN `$table2` WHERE `$table`.`kategori`=`$table2`.`id_kat` AND `$table`.`status`= 'ada' ";

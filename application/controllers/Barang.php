@@ -19,8 +19,11 @@ class Barang extends CI_Controller {
 	function jual(){
 		$this->load->database();
 
-		//ambal data kaytegori barang dari model
-		$data['kategori']      = $this->m_data->getAllKategori('kategori')->result();
+		$where = array('id' => $this->session->userdata('id'));
+
+		//ambal data kategori barang dari model
+		$data['kategori']   = $this->m_data->getAllKategori('kategori')->result();
+		$data['anggota']    = $this->m_data->getAnggota('anggota',$where)->result();
 
 		$this->load->view('shop/v_jualBarang',$data);
 	}

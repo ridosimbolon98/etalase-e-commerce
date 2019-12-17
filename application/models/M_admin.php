@@ -101,6 +101,14 @@ class M_admin extends CI_Model{
 	}
 
 
+	//UPDATE DATA BARANG
+
+	function updateDataBarang($table,$idBarang,$data) {
+		$this->db->where('id', $idBarang);
+		return $this->db->update($table, $data);
+	}
+
+
 
 
 }

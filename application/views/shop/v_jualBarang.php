@@ -169,24 +169,27 @@
 						<div class="pt-3 card-header">
 							<h3 class="text-center">Hi Pengguna <span class="text-primary">Jualin.Id</span>, jualin barang anda disini <i class="fa fa-heart text-danger"></i></h3>
 						</div>
+
+					<?php foreach ($anggota as $row) { ?>
+
 						<form class="form-group" method="post" action="<?= base_url(); ?>barang/jualBarang" enctype="multipart/form-data">
 							<div class="pb-3 pt-3">
 								<label>Nama Barang</label>
 								<input class="form-control" type="text" name="id_pengguna" hidden value="<?= $this->session->userdata('id') ?>">
-								<input class="form-control" type="text" name="nama_barang" placeholder="Nama Barang" required autofocus>
+								<input class="form-control text-dark" type="text" name="nama_barang" placeholder="Nama Barang" required autofocus>
 							</div>
 							<div class="pb-3">
 								<label>Deskripsi Barang</label>
-								<textarea class="form-control" placeholder="Deskripsi" name="deskripsi" required></textarea>
+								<textarea class="form-control text-dark" placeholder="Deskripsi" name="deskripsi" required></textarea>
 							</div>
 							<div class="pb-3">
 								<label>Harga Barang</label>
-								<input class="form-control" type="text" name="harga_barang" placeholder="Harga Barang" required>
+								<input class="form-control text-dark" type="number" name="harga_barang" step="1" placeholder="Harga Barang" required>
 							</div>
 							<div class="pb-3">
 								<label>Kategori Barang</label>
-								<select class="form-control" name="kategori" required>
-									<option value="" disabled selected>Pilih Kategori</option>
+								<select class="form-control text-dark" name="kategori" required>
+									<option value="" disabled selected>--Pilih Kategori--</option>
 									<?php foreach ($kategori as $kat) { ?>
 										<option value="<?= $kat->id_kat; ?>"><?= $kat->nama_kategori; ?></option>
 									<?php }	?>
@@ -200,11 +203,11 @@
 							</div>
 							<div class="pb-3">
 								<label>Alamat Anda</label>
-								<textarea class="form-control" placeholder="Alamat" name="alamat" required></textarea>
+								<textarea disabled class="form-control text-dark" name="alamat"><?= $row->alamat; ?></textarea>
 							</div>
 							<div class="pb-3">
 								<label>No HP</label>
-								<input class="form-control" placeholder="No HP" name="hp" required></input>
+								<input disabled class="form-control text-dark" name="hp" value="<?= $row->hp; ?>"></input>
 							</div>
 							<div class="pb-3 upload-btn-wrapper">
 								<label>Upload Foto Barang</label><br>
@@ -216,6 +219,9 @@
 								<input type="submit" class="form-control btn btn-primary text-white" name="submit" value="Upload">
 							</div>
 						</form>
+
+					<?php } ?>
+
 					</div>
 				</div>
 			</div>
@@ -379,27 +385,27 @@
 		      		<form method="post" action="<?php echo base_url(); ?>login/daftar">
 		        		<div class="form-group">
 				          	<label for="title">Nama</label>
-				          	<input type="text" name="nama" autofocus class="form-control" required placeholder="Nama">
+				          	<input type="text" name="nama" autofocus class="form-control text-dark" required placeholder="Nama">
 		        		</div>
 		        		<div class="form-group">
 				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" class="form-control" required placeholder="Username/Email">
+				          	<input type="email" name="username" class="form-control text-dark" required placeholder="Username/Email">
 		        		</div>
 				        <div class="form-group">
 				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control" required placeholder="Password">
+				          	<input type="password" name="password" class="form-control text-dark" required placeholder="Password">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">Konfirmasi Password</label>
-				          	<input type="password" name="konfirmasi_password" class="form-control" required placeholder="Konfirmasi Password">
+				          	<input type="password" name="konfirmasi_password" class="form-control text-dark" required placeholder="Konfirmasi Password">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">Alamat</label>
-				          	<input type="text" name="alamat" class="form-control" required placeholder="Alamat">
+				          	<input type="text" name="alamat" class="form-control text-dark" required placeholder="Alamat">
 				        </div>
 				        <div class="form-group">
 				          	<label for="title">No.HP</label>
-				          	<input type="text" name="no_hp" class="form-control" required placeholder="+62 8**********">
+				          	<input type="text" name="no_hp" class="form-control text-dark" required placeholder="08**********">
 				        </div>
 
 				        <div class="modal-footer">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Jualin Id | Detail Barang</title>
+  <title>Admin Jualin Id | Edit Barang</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -404,16 +404,53 @@
               
             <?php foreach ($detail_barang as $row) {  ?>
 
-              <div class="text-center detail box-shadow-detail">
-                <span class="kategori"><?= $row->nama_kategori; ?></span>
-                <h3><?= $row->nama_barang; ?></h3>
-                <p class="deskripsi-produk"><?= $row->deskripsi; ?></p>
-                <h4><b><?= 'Rp '. number_format($row->harga,2,",","."); ?></b></h4>
-                <hr>
-
-                <div>
-                  <label>Status Barang : <span class="text-green"><?= $row->status; ?></span></label>
-                </div>
+              <div class="detail box-shadow-detail">
+                <form class="form-group" action="<?= base_url(); ?>admin/editAksi" method="post">
+                  <div class="">
+                    <label>Nama Barang</label>
+                    <input type="text" hidden name="idBarang" value="<?= $row->id; ?>">
+                    <input class="form-control" type="text" name="nama" value="<?= $row->nama_barang; ?>" required>
+                  </div>
+                  <div>
+                    <label>Deskripsi</label>
+                    <textarea class="form-control" name="deskripsi" required><?= $row->deskripsi; ?></textarea>
+                  </div>
+                  <div>
+                    <label>Kategori</label>
+                    <select name="kategori" class="form-control" required>
+                      <option value="<?= $row->kategori ?>"><?= $row->nama_kategori; ?></option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Harga</label>
+                    <input class="form-control" type="text" name="harga" value="<?= $row->harga; ?>" required>
+                  </div>
+                  <div>
+                    <label>Status</label>
+                    <?php if($row->status == 'ada') { ?>
+                      <div class="form-check form-check-inline mx-4">
+                        <input id="ada1" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+                        <label class="form-check-label pl-0" for="ada1">Ada</label>
+                      </div>
+                      <div class="form-check form-check-inline ml-4">
+                        <input id="terjual1" class="form-check-input" type="radio" name="status" value="terjual">
+                        <label class="form-check-label pl-0" for="terjual1">Terjual</label>
+                      </div>
+                    <?php } else { ?>
+                      <div class="form-check form-check-inline mx-4">
+                        <input id="ada2" class="form-check-input" type="radio" name="status" value="ada">
+                        <label class="form-check-label pl-0" for="ada2">Ada</label>
+                      </div>
+                      <div class="form-check form-check-inline ml-4">
+                        <input id="terjual2" class="form-check-input" type="radio" name="status" value="<?= $row->status; ?>" checked>
+                        <label class="form-check-label pl-0" for="terjual2">Terjual</label>
+                      </div>
+                    <?php } ?>
+                  </div>
+                  <div>
+                    <input class="btn btn-primary form-control" type="submit" name="submit" onclick="return confirm('Apakah anda ingin mengubah data barang ?')" value="Simpan Perubahan">
+                  </div>
+                </form>
 
                 <hr>
 
@@ -442,7 +479,7 @@
                     </tr>
                   </table>
                   <div>
-                    <a class="btn btn-success" href="https://api.whatsapp.com/send?phone=62<?php echo intval($row->hp); ?>&text=Hallo%20Pengguna%20Jualin%20Id%20:)" target="_blank">
+                    <a class="btn btn-success form-control" href="https://api.whatsapp.com/send?phone=62<?php echo intval($row->hp); ?>&text=Hallo%20Pengguna%20Jualin%20Id%20:)" target="_blank">
                       <i class="fa fa-whatsapp"></i>
                        Chat Penjual
                     </a>
@@ -463,3 +500,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+
+
+
