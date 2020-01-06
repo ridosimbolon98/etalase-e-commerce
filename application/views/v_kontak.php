@@ -153,8 +153,21 @@
 
 	<!-- Contact Info -->
 
+  <?php if (in_array('login',  $this->session->userdata())) { ?>
+
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  Selamat datang pengguna jualin.id
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	
+  <?php } ?>
+  
 	<div class="contact_info">
 		<div class="container">
+
+			  
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="contact_info_container d-flex flex-lg-row flex-column justify-content-between align-items-between">

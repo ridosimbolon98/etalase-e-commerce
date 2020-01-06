@@ -11,6 +11,11 @@ class M_login extends CI_Model{
 		return $this->db->get_where($table,$where);
 	}
 
+	//query untuk cek email akun 
+	function cekEmail($table,$where){
+		return $this->db->get_where($table,$where);
+	}
+
 	//cek password lama= password input anggota
 	function cekPassword($table,$id_anggota,$pass_lama){
 		$this->db->select('*');
@@ -23,6 +28,12 @@ class M_login extends CI_Model{
 	//update password anggota
 	function updatePass($table,$id_anggota,$data){
 		$this->db->where('id', $id_anggota);
+		return $this->db->update($table, $data);
+	}
+
+	//reset password anggota
+	function resetPass($table,$email,$data){
+		$this->db->where('username', $email);
 		return $this->db->update($table, $data);
 	}
 

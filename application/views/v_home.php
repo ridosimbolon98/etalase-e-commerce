@@ -8,8 +8,10 @@
 				<div class="banner_product_image"><img src="<?php echo base_url();?>assets/images/banner_product.png" alt=""></div>
 				<div class="col-lg-5 offset-lg-4 fill_height">
 					<div class="banner_content">
-						<h1 class="banner_text">Jualin di sini</h1>
+						<h1 class="banner_text">Jualin.id</h1>
+						<p>Tempat kamu jual beli barang bekas berkualitas. Yuk pasang iklan kamu sekarang, dijamin gampang!</p>
 						<div class="button banner_button"><a href="<?= base_url(); ?>shop">Belanja Disini</a></div>
+						<div class="button banner_button btn-success"><a class="btn-success" href="#" onclick="jualBarang()">Jualin Disini</a></div>
 					</div>
 				</div>
 			</div>
@@ -179,8 +181,7 @@
 				<div class="col">
 					
 					<div class="reviews_title_container">
-						<h3 class="reviews_title">Review Terbaru</h3>
-						<div class="reviews_all ml-auto"><a href="#">view all <span>reviews</span></a></div>
+						<h3 class="reviews_title">Feedback Pengguna Jualin</h3>
 					</div>
 
 					<div class="reviews_slider_container">
@@ -188,95 +189,22 @@
 						<!-- Reviews Slider -->
 						<div class="owl-carousel owl-theme reviews_slider">
 							
-							<!-- Reviews Slider Item -->
-							<div class="owl-item">
-								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_1.jpg" alt=""></div></div>
-									<div class="review_content">
-										<div class="review_name">Roberto Sanchez</div>
-										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
-										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
-									</div>
-								</div>
-							</div>
+						<?php foreach ($feedback as $fb) { ?>
 
 							<!-- Reviews Slider Item -->
 							<div class="owl-item">
 								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_2.jpg" alt=""></div></div>
 									<div class="review_content">
-										<div class="review_name">Brandon Flowers</div>
+										<div class="review_name"><?php echo $fb->nama_pengirim ?></div>
 										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
+											<div class="review_time"><?php echo $fb->date; ?></div>
 										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+										<div class="review_text"><p><?= $fb->pesan; ?></p></div>
 									</div>
 								</div>
 							</div>
 
-							<!-- Reviews Slider Item -->
-							<div class="owl-item">
-								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_3.jpg" alt=""></div></div>
-									<div class="review_content">
-										<div class="review_name">Emilia Clarke</div>
-										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
-										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Reviews Slider Item -->
-							<div class="owl-item">
-								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_1.jpg" alt=""></div></div>
-									<div class="review_content">
-										<div class="review_name">Roberto Sanchez</div>
-										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
-										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Reviews Slider Item -->
-							<div class="owl-item">
-								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_2.jpg" alt=""></div></div>
-									<div class="review_content">
-										<div class="review_name">Brandon Flowers</div>
-										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
-										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Reviews Slider Item -->
-							<div class="owl-item">
-								<div class="review d-flex flex-row align-items-start justify-content-start">
-									<div><div class="review_image"><img src="<?php echo base_url();?>assets/images/review_3.jpg" alt=""></div></div>
-									<div class="review_content">
-										<div class="review_name">Emilia Clarke</div>
-										<div class="review_rating_container">
-											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
-											<div class="review_time">2 day ago</div>
-										</div>
-										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
-									</div>
-								</div>
-							</div>
+						<?php } ?>
 
 						</div>
 						<div class="reviews_dots"></div>
@@ -352,7 +280,7 @@
 				        		</div>
 				        		<div class="col-sm-6">
 				        			Belum mempunyai akun? <a id="daftarAkun" href="" data-toggle="modal" data-target="#daftarAkunModal" class="text-primary pr-3">Daftar Disini | </a><br>	
-				        			<a href="#" class="text-primary pr-3">Lupa password?</a>
+				        			<a id="lupaPass" href="" data-toggle="modal" data-target="#lupaPassModal" class="text-primary pr-3">Lupa Password</a>
 				        		</div>
 				        	</div>
 				        </div>
@@ -401,6 +329,33 @@
 				        <div class="modal-footer">
 				          	<button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 				          	<button class="btn btn-primary" type="submit" name="submit">Daftar</button>
+				        </div>
+		      		</form>
+		    	</div>
+		  	</div>
+		</div>
+	</div>
+	<!-- AKHIR DAFTAR AKUN MODAL-->
+
+	<!--DAFTAR AKUN MODAL-->
+	<div class="modal fade" id="lupaPassModal">
+		<div class="modal-dialog modal-lg">
+		  	<div class="modal-content">
+			    <div class="modal-header bg-primary text-white">
+			      	<h5 class="modal-title">Lupa Password</h5>
+			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
+			    </div>
+		    	<div class="modal-body">
+		    		<p class="mt-3">Kirim email anda menggunakan form di bawah ini. Sistem kami akan secara otomatis mengirim token link yang akan anda gunakan mendapatkan password baru anda. Terimakasih</p>
+		      		<form method="post" action="<?php echo base_url(); ?>login/getToken">
+		        		<div class="form-group">
+				          	<label for="title">Email anda</label>
+				          	<input type="email" name="email" autofocus class="form-control text-dark" required placeholder="Email akun anda">
+		        		</div>
+
+				        <div class="modal-footer mt-2">
+				          	<button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+				          	<button class="btn btn-primary" type="submit" name="submit">Kirim Token</button>
 				        </div>
 		      		</form>
 		    	</div>

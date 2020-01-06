@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Jualin Id | Log in</title>
+  <title>Reset Password</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -25,25 +25,30 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>Jualin Id</a>
+    Reset password untuk
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Login Admin</p>
+    <p class="login-box-msg"><?php echo $this->session->userdata('reset_email'); ?></p>
 
-    <form action="<?= base_url(); ?>login/login_aksi" method="post">
+    <form action="<?= base_url(); ?>login/resetPass" method="post">
       <div class="form-group has-feedback">
-        <input type="email" name="username" class="form-control" placeholder="Email" autofocus required>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      	<label>Password baru</label>
+        <input id="passBaru" type="password" name="password" class="form-control" placeholder="Masukkan password baru" required>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      	<label>Konfirmasi Password</label>
+        <input id="konfPass" type="password" name="konfirmasi_password" class="form-control" placeholder="Konfirmasi password baru" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+      	<span id="alertPass"></span>
       </div>
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Reset password</button>
         </div>
         <!-- /.col -->
       </div>
@@ -60,6 +65,23 @@
 <script src="<?= base_url(); ?>assets/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="<?= base_url(); ?>assets/admin/plugins/iCheck/icheck.min.js"></script>
+
+<script>
+	//ubah password validasi
+	const passBaru = document.getElementById('passBaru');
+	const konfPass = document.getElementById('konfPass');
+
+	konfPass.addEventListener('input', () => {
+		let alertPass = document.getElementById('alertPass');
+		
+		if (passBaru.value != konfPass.value) {
+			alertPass.innerHTML = '*Konfirmasi password tidak sama!';
+		} else {
+			alertPass.setAttribute('class', 'text-success');
+			alertPass.innerHTML = '<i class="fa fa-check mt-2"></i>';
+		}
+	});
+</script>
 
 </body>
 </html>

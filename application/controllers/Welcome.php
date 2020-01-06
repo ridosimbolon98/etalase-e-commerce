@@ -36,6 +36,7 @@ class Welcome extends CI_Controller {
 		$data['kategori']      = $this->m_data->getAllKategori('kategori')->result();
 		$data['barang']        = $this->m_data->tampilBarang('barang','kategori')->result();
 		$data['barangTerbaru'] = $this->m_data->getAllBarangTerbaru('barang','kategori')->result();
+		$data['feedback']      = $this->m_pesan->getFeedback('feedback')->result();
 
 		$this->load->view('v_header', $data);
 		$this->load->view('v_home', $data);

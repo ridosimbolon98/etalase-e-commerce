@@ -66,6 +66,18 @@
 
 		<div class="header_main">
 			<div class="container">
+
+			  <?php if (in_array('login',  $this->session->userdata())) { ?>
+
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  Selamat datang pengguna jualin.id
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				
+			  <?php } ?>
+
 				<div class="row">
 
 					<!-- Logo Jualin-->

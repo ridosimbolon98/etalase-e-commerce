@@ -155,6 +155,19 @@
 
 <!-- Bagian Utama -->
 
+  
+<?php if (in_array('login',  $this->session->userdata())) { ?>
+
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  Selamat datang pengguna jualin.id
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+
+<?php } ?>
+			  
+
 <?php foreach ($anggota as $row) { ?>
 
 	<div class="profil">
@@ -200,7 +213,7 @@
 
 				<div class="col-sm-6 m-3">
 					<div class="text-center">
-						<h4>Daftar barang</h4>
+						<h4>Daftar barang yang anda jual</h4>
 					</div>
 					<!-- menampilkan daftar barang yg dijual akun session -->
 					<div class="row">

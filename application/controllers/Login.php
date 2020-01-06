@@ -133,4 +133,125 @@ class Login extends CI_Controller {
 	}
 
 
+
+	//FUNGSI UNTUK GANTI EMAIL
+	public function getToken() {
+		$this->load->database();
+
+		$email = strip_tags($this->input->post('email'));
+
+		$where = array('username' => $email);
+
+		$getEmail = $this->m_login->cekEmail('anggota', $where)->row_array();
+		if ($getEmail) {
+			//kirim token email otomatis
+
+			//buat token random
+			$tkn = base64_encode(random_bytes(32));
+			$user_token = [
+				'email'        =>$email,
+				'token'        =>$tkn,
+				'date_created' => time()
+			];
+
+			$this->db->insert('token', $user_token);
+
+			$config = Array(
+			  'mailtype'  => 'html',
+			  'charset'   => 'iso-8859-1',
+			  'protocol'  => 'smtp',
+			  'smtp_host' => 'ssl://smtp.gmail.com',
+			  'smtp_user' => 'ridosimbolon99@gmail.com',  // Email gmail
+			  'smtp_pass' => 'S4y@ngku',  // Password gmail
+			  'smtp_port' => 465,
+			  'crlf'      => "\r\n",
+			  'newline'   => "\r\n"
+			);
+			
+			$this->load->library('email', $config);
+			$this->email->from('ridosimbolon99@gmail.com', 'jualin.id');
+			$this->email->to($email);
+			$this->email->subject('Reset Password Akun Jualin.id');
+			$this->email->message('Silahkan klik link berikut ini untuk mendapatkan password akun anda : <a href="' . base_url(). 'login/resetPassword?email='. $email .'&token='. urlencode($tkn). '">Reset Password</a>');
+
+			if($this->email->send()) {
+			     echo "<sript>alert('Cek email anda untuk mereset password baru anda!');</script>";
+			     echo "<script>location='".base_url()."'; </script>";
+			}
+			else {
+			     echo "<sript>alert('Email gagal dikirim');</script>";
+			     echo '<br />';
+			     echo $this->email->print_debugger();
+			}
+		} else {
+			echo "<script>alert('Maaf! email anda belum terdaftar di database, Silahkan mendaftarkan akun anda dengan email ini');</script>";
+			echo "<script>location='".base_url()."'; </script>";
+		}
+		
+
+	}
+
+	public function resetPassword() {
+		$email = $this->input->get('email');
+		$token = $this->input->get('token');
+
+		$user  = $this->db->get_where('anggota', ['username' => $email])->row_array();
+		if ($user) {
+			//cek token apakah ada di tabel token ?
+			$user_token = $this->db->get_where('token', ['token' => $token])->row_array();
+			if ($user_token) {
+				//redirect ke halaman reset password
+				$this->session->set_userdata('reset_email', $email);
+				$this->ubahPass();
+			} else {
+				echo "<script>alert('Maaf! token tidak ada di database,reset password gagal');</script>";
+				echo "<script>location='".base_url()."'; </script>";
+			}
+			
+		} else {
+			echo "<script>alert('Maaf! email anda belum terdaftar di database,reset password gagal');</script>";
+			echo "<script>location='".base_url()."'; </script>";
+		}
+		
+	}
+
+
+	public function ubahPass() {
+		if (!$this->session->userdata('reset_email')) {
+			echo "<script>location='".base_url()."'; </script>";
+		} else {
+			$this->load->view('ubah_password');
+		}
+		
+	}
+
+	public function resetPass() {
+		if (!$this->session->userdata('reset_email')) {
+			echo "<script>location='".base_url()."'; </script>";
+		} else {
+			$this->load->database();
+			$email = $this->session->userdata('reset_email');
+
+			$pass_baru = strip_tags($this->input->post('password'));
+			$konf_pass = strip_tags($this->input->post('konfirmasi_password'));
+
+			$data = array ('password' => md5($pass_baru));
+			$updatePass = $this->m_login->resetPass('anggota', $email, $data);
+
+			if ($updatePass) {
+				$this->session->unset_userdata('reset_email');
+
+				echo "<script>alert('Password lama anda berhasil diperbaharui');</script>";
+				echo "<script>location='".base_url('')."';</script>";
+			} else {
+				echo "<script>alert('Gagal memperbaharui password lama anda!');</script>";
+				echo "<script>location='".base_url('')."';</script>";
+			}
+		}		
+
+	}
+
+
+
+
 }

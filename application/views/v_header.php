@@ -44,7 +44,6 @@
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
-								
 								<?php if (!in_array('login',  $this->session->userdata())) { ?>
 									<div><a href="" data-toggle="modal" data-target="#daftarAkunModal">Daftar Akun</a></div>
 									<div><a href="" data-toggle="modal" data-target="#loginModal">Login</a></div>
@@ -67,7 +66,19 @@
 		<!-- Header Main -->
 
 		<div class="header_main">
-			<div class="container">
+			<div class="container p-3">
+			  
+			  <?php if (in_array('login',  $this->session->userdata())) { ?>
+
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  Selamat datang pengguna jualin.id
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				
+			  <?php } ?>
+			  
 				<div class="row">
 
 					<!-- Logo Jualin-->
