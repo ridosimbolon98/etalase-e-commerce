@@ -100,7 +100,6 @@
 
 </div>
 
-
 <script src="<?php echo base_url();?>assets/js/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url();?>assets/styles/bootstrap4/popper.js"></script>
 <script src="<?php echo base_url();?>assets/styles/bootstrap4/bootstrap.min.js"></script>
@@ -115,6 +114,19 @@
 <script src="<?php echo base_url();?>assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/shop_custom.js"></script>
+
+<!-- script untuk jual barang -->
+<script>
+	const jual = document.getElementById('jual');
+    jual.addEventListener('click', () => {
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        location = "<?php echo base_url('login'); ?>";
+      <?php else: ?>
+        location = "<?php echo base_url('barang/jual'); ?>";
+      <?php endif ?>
+    });
+
+</script>
 
 </body>
 

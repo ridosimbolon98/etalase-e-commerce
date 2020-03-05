@@ -36,10 +36,10 @@
 						<div class="footer_title">Ada pertanyaan? Hubungi Kami 24/7</div>
 						<div class="footer_phone">
 							<i class="fa fa-whatsapp"> </i>
-							 +62 853 6187 2032
+							 +62 852 9213 3150
 						</div>
 						<div class="footer_contact_text">
-							<p>JL. Mulawarman Barat 1 No.10 A</p>
+							<p>JL. Prof. Soedarto No.50275</p>
 							<p>Tembalang, Kota Semarang, Jawa Tengah</p>
 						</div>
 						<div class="footer_social">
@@ -58,11 +58,9 @@
 					<div class="footer_column">
 						<div class="footer_title">Bookmarks</div>
 						<ul class="footer_list">
-							<li><a href="#">Elektronik</a></li>
-							<li><a href="#">Perkakas</a></li>
-							<li><a href="#">Buku</a></li>
-							<li><a href="#">Smartphone</a></li>
-							<li><a href="#">Aksesoris</a></li>
+						  <?php foreach ($kategori as $kat) { ?>
+							<li><a href="<?= base_url(); ?>shop/kategori/<?= $kat->nama_kategori; ?>"><?= $kat->nama_kategori; ?></a></li>
+						  <?php } ?>
 						</ul>
 					</div>
 				</div>
@@ -92,7 +90,7 @@
 				<div class="col">
 					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
 						<div class="copyright_content">
-							Copyright &copy; 2019 | Rido Simbolon
+							Copyright &copy; 2019 - <?= date('Y'); ?> | BEM FSM UNDIP created with <i class="fa fa-heart"></i> by Rido Simbolon
 						</div>
 					</div>
 				</div>
@@ -101,30 +99,6 @@
 	</div>
 
 </div>
-
-<script>
-
-
-	//const btnCari = document.querySelector('#tombol_cari');
-
-	// btnCari.addEventListener('click', () => {
-	// 	let kategori = $('#pilihan_kategori').val();
-	// 	if(kategori != ''){
-	// 		let input = $('#input_cari').val();
-
-	// 		$.ajax({
-	// 			url      : "<?php //echo base_url(); ?>shop/search",
-	// 			type     : 'GET',
-	// 			dataType : 'html',
-	// 			data     : 'q='+input+'&kat='+kategori,
-	// 			success  : function(respons){
-	// 				console.log(respons);
-	// 			},
-	// 		})
-	// 	}
-	// });
-
-</script>
 
 
 <script src="<?php echo base_url();?>assets/js/jquery-3.3.1.min.js"></script>
@@ -139,6 +113,18 @@
 <script src="<?php echo base_url();?>assets/plugins/slick-1.8.0/slick.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/easing/easing.js"></script>
 <script src="<?php echo base_url();?>assets/js/custom.js"></script>
+
+<script>
+	const jual = document.getElementById('jual');
+    jual.addEventListener('click', () => {
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        location = "<?php echo base_url('login'); ?>";
+      <?php else: ?>
+        location = "<?php echo base_url('barang/jual'); ?>";
+      <?php endif ?>
+    });
+</script>
+
 </body>
 
 </html>

@@ -16,6 +16,12 @@
   <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/plugins/iCheck/square/blue.css">
+  <style type="text/css">
+    .validasi {
+      font-size: 10px;
+      color: #E84A3B;
+    }
+  </style>
 
   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/logo.png">
 
@@ -33,12 +39,14 @@
 
     <form action="<?= base_url(); ?>login/login_aksi" method="post">
       <div class="form-group has-feedback">
-        <input type="email" name="username" class="form-control" placeholder="Email" autofocus required>
+        <input type="email" name="email" class="form-control" placeholder="Email" autofocus value="<?= set_value('email'); ?>">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <?= form_error('email', '<p class="validasi pl-3">', '</p>');?>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <?= form_error('password', '<p class="validasi pl-3">', '</p>');?>
       </div>
       <div class="row">
         <!-- /.col -->

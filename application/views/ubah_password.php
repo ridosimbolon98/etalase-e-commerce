@@ -25,7 +25,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    Reset password untuk
+    Reset password anda
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -48,7 +48,7 @@
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Reset password</button>
+          <button type="submit" class="btn btn-primary btn-flat">Reset password</button>
         </div>
         <!-- /.col -->
       </div>

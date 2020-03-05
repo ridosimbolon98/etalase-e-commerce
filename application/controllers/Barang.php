@@ -11,6 +11,7 @@ class Barang extends CI_Controller {
 			$this->load->helper('url');
 			$this->load->model('m_data');
 			$this->load->model('m_login');
+			$this->load->library('form_validation');
 		}	
 					
 	}
@@ -22,8 +23,9 @@ class Barang extends CI_Controller {
 		$where = array('id' => $this->session->userdata('id'));
 
 		//ambal data kategori barang dari model
-		$data['kategori']   = $this->m_data->getAllKategori('kategori')->result();
-		$data['anggota']    = $this->m_data->getAnggota('anggota',$where)->result();
+		$data['title']    = 'Jual Barang Anda Disini';
+		$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
+		$data['anggota']  = $this->m_data->getAnggota('anggota',$where)->result();
 
 		$this->load->view('shop/v_jualBarang',$data);
 	}
@@ -33,10 +35,34 @@ class Barang extends CI_Controller {
 		$this->load->database();
 
 		$data['gambar'] = array();
+    	//validasi upload barang
+    	$this->form_validation->set_rules('nama_barang', 'Nama_Barang', 'required|trim|min_length[4]', [
+			'required' => '*Nama barang harus diisi!',
+			'min_length' => '*Nama barang minimal 4 karakter!',
+		]);
+		$this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required|trim|min_length[4]', [
+			'required' => '*Deskripsi barang harus diisi!',
+			'min_length' => '*Deskripsi barang minimal 4 karakter!',
+		]);
+		$this->form_validation->set_rules('harga_barang', 'Harga_barang', 'required|trim', [
+			'required' => '*Harga barang harus diisi!'
+		]);
+		$this->form_validation->set_rules('kategori', 'Kategori', 'required|trim', [
+			'required' => '*Kategori barang harus dipilih!'
+		]);
 
-        // apakah file sudah di submit
-        if($this->input->post('submit') && !empty($_FILES['gambar_barang']['name'])){
+    	if ($this->form_validation->run() == false) {
+    		$this->load->database();
 
+			$where = array('id' => $this->session->userdata('id'));
+
+			//ambal data kategori barang dari model
+			$data['title']    = 'Jual Barang Anda Disini';
+			$data['kategori'] = $this->m_data->getAllKategori('kategori')->result();
+			$data['anggota']  = $this->m_data->getAnggota('anggota',$where)->result();
+
+			$this->load->view('shop/v_jualBarang',$data);
+        } else {
         	//ambil data dari form jual barang
 			$id_pengguna   = strip_tags($this->input->post('id_pengguna'));
 			$nama_brg      = strip_tags($this->input->post('nama_barang'));
@@ -55,7 +81,6 @@ class Barang extends CI_Controller {
                 $_FILES['file']['error']    = $_FILES['gambar_barang']['error'][$i];
                 $_FILES['file']['size']     = $_FILES['gambar_barang']['size'][$i];
                 
-                //Konfigurasi file upload
                 $uploadPath              = 'img/';
                 $config['upload_path']   = $uploadPath;
                 $config['allowed_types'] = 'jpg|jpeg|png';
@@ -64,6 +89,7 @@ class Barang extends CI_Controller {
                 $this->load->library('upload', $config);
                 $this->upload->initialize($config);
                 
+                //Konfigurasi file upload
                 // Upload file ke direktori (server)
                 if($this->upload->do_upload('file')){
                     // Uploaded file data
@@ -92,7 +118,7 @@ class Barang extends CI_Controller {
                 
                 if ($insert) {
 					echo "<script>alert('Barang anda akan segera diproses admin dan ditampilkan di halaman utama');</script>";
-					echo "<script>location='".base_url()."';</script>";
+					echo "<script>location='".base_url('profil')."';</script>";
 				} else {
 					echo "<script>alert('Gagal memproses barang anda');</script>";
 					echo "<script>location='".base_url()."barang/jual';</script>";
@@ -100,7 +126,6 @@ class Barang extends CI_Controller {
             }
         }
 	}
-
 
 	//menampilkan detail barang yang dijual anggota
 	function detail($idBarang) {

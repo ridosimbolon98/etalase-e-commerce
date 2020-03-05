@@ -14,6 +14,11 @@ class M_admin extends CI_Model{
 		return $this->db->get();
 	}
 
+	//mengambil data langganan
+	function getAllLangganan($table){
+		return $this->db->get($table);
+	}
+
 	//ambil semua barang dari database dengan paginasi
 	function ambilSemuaBarang($table, $table2, $start, $limit){
 		$this->db->select('*');
@@ -22,7 +27,6 @@ class M_admin extends CI_Model{
 		$this->db->limit($start,$limit);
 		return $this->db->get();
 	}
-
 
 	//ambil data semua barang ada dari database
 	function getAllBarangAda($table,$where){
@@ -82,13 +86,10 @@ class M_admin extends CI_Model{
 		return $this->db->delete($table);
 	}
 
-
-
 	//ambil data anggota dari database
 	function getAllAnggota($table){
 		return $this->db->get($table);
 	}
-
 
 	//ambil data detail barang dan kategori berdasarkan id
 	function getDetBrgKat($table, $table2, $table3, $id) {
@@ -102,13 +103,36 @@ class M_admin extends CI_Model{
 
 
 	//UPDATE DATA BARANG
-
 	function updateDataBarang($table,$idBarang,$data) {
 		$this->db->where('id', $idBarang);
 		return $this->db->update($table, $data);
 	}
 
+	//mengambil data kategori
+	function getAllKategori($table,$start,$limit){
+		return $this->db->get($table,$start,$limit);
+	}
 
+	//mengambil data jlh kategori
+	function getJlhKategori($table){
+		return $this->db->get($table);
+	}
 
+	//INSERT KATEGORI
+	function insertKategori($table,$data) {
+		return $this->db->insert($table, $data);
+	}
+
+	//UPDATE KATEGORI
+	function updateKategori($table,$id,$data) {
+		$this->db->where('id_kat', $id);
+		return $this->db->update($table, $data);
+	}
+
+	//DELETE KATEGORI
+	function deleteKategori($table,$id) {
+		$this->db->where('id_kat', $id);
+		return $this->db->delete($table);
+	}
 
 }

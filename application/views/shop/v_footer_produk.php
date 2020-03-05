@@ -100,7 +100,6 @@
 
 </div>
 
-
 <script src="<?= base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
 <script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
@@ -113,7 +112,6 @@
 <script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
 <script src="<?= base_url(); ?>assets/js/product_custom.js"></script>
 
-
 <!-- script untuk jual barang -->
 
   <script>
@@ -123,7 +121,7 @@
       let inputChat = document.getElementById('inputChat');
       
       <?php if (!in_array('login',  $this->session->userdata())): ?>
-        $('#loginModal').modal('show');
+        location = "<?php echo base_url('login'); ?>";
       <?php else: ?>
         $('#chatModal').modal('show');
       <?php endif ?>
@@ -224,14 +222,14 @@
 
     /*akhir fungsi chat*/ 
 
-
-    var jualBarang = () => {
-        <?php if (!in_array('login',  $this->session->userdata())): ?>
-        $('#loginModal').modal('show');
+    const jual = document.getElementById('jual');
+    jual.addEventListener('click', () => {
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        location = "<?php echo base_url('login'); ?>";
       <?php else: ?>
-        window.location = "<?= base_url(); ?>barang/jual";
+        location = "<?php echo base_url('barang/jual'); ?>";
       <?php endif ?>
-    }
+    });
   </script>
 
 

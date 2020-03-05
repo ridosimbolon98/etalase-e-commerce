@@ -17,29 +17,25 @@
 </head>
 
 <body>
-
 <div class="super_container">
 	
 	<!-- Header -->
-	
 	<header class="header">
-
 		<!-- Top Bar -->
-
 		<div class="top_bar">
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
 						<div class="top_bar_contact_item">
-						    <span class="tombol-jual" onclick="jualBarang()">Jual Barang</span>
+						    <span class="tombol-jual" id="jual">Jual Barang</span>
 						</div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="<?= base_url(); ?>assets/images/user.svg" alt=""></div>
 
 								<?php if (!in_array('login',  $this->session->userdata())) { ?>
-									<div><a href="" data-toggle="modal" data-target="#daftarAkunModal">Daftar Akun</a></div>
-									<div><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
+									<div><a href="<?= base_url('login/da') ?>">Daftar Akun</a></div>
+									<div><a href="<?= base_url('login') ?>" >Login</a></div>
 								<?php } else { ?>
 									<div>
 										<a href="<?= base_url(); ?>Profil"><?= $this->session->userdata("nama"); ?></a>
@@ -56,7 +52,6 @@
 			</div>		
 		</div>
 
-		
 		<!-- Main Navigation -->
 
 		<nav class="main_nav">
@@ -104,7 +99,6 @@
 
 		<!-- Menu Utama-->
 
-
 		<div class="page_menu">
 			<div class="container">
 				<div class="row">
@@ -129,20 +123,41 @@
 								</li>
 							</ul>
 							
-							<div class="menu_contact">
-								<div class="menu_contact_item">
-									<div class="menu_contact_icon">
-										<div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
-										<a href="#"><?= $this->session->userdata("nama"); ?></a>
-									</div>
-								</div>
-								<div class="menu_contact_item">
-									<div class="menu_contact_icon">
-										<img src="" alt="">
-									</div>
-									<a href="<?= base_url(); ?>login/logout">Logout</a>
-								</div>
-							</div>
+							<?php if (!in_array('login',  $this->session->userdata())) { ?>
+
+				                <div class="menu_contact">
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
+				                      <a href="<?= base_url('login/da') ?>">Daftar Akun</a>
+				                    </div>
+				                  </div>
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <img src="" alt="">
+				                    </div>
+				                    <a href="<?= base_url('login') ?>" >Login</a>
+				                  </div>
+				                </div>
+				              
+				              <?php } else { ?>
+				                <div class="menu_contact">
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
+				                      <a href="#"><?= $this->session->userdata("nama"); ?></a>
+				                    </div>
+				                  </div>
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <img src="" alt="">
+				                    </div>
+				                    <a href="<?= base_url(); ?>login/logout">Logout</a>
+				                  </div>
+				                </div>
+
+				            <?php } ?>
+
 						</div>
 					</div>
 				</div>
@@ -153,21 +168,11 @@
 
 	<!-- Contact Info -->
 
-  <?php if (in_array('login',  $this->session->userdata())) { ?>
-
-	<div class="alert alert-warning alert-dismissible fade show" role="alert">
-	  Selamat datang pengguna jualin.id
-	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	    <span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
-	
-  <?php } ?>
+	<?php echo $this->session->flashdata('message'); ?>
   
 	<div class="contact_info">
 		<div class="container">
 
-			  
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="contact_info_container d-flex flex-lg-row flex-column justify-content-between align-items-between">
@@ -212,19 +217,23 @@
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="contact_form_container">
-						<div class="contact_form_title">Kirim kami pesan</div>
+						<div class="contact_form_title">Kirim kami pesan feedback anda</div>
 
 						<form method="POST" action="<?= base_url(); ?>welcome/feedback" id="contact_form">
 							<div class="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
-								<input name="nama_pengirim" type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="Nama Anda" required="required" data-error="Name is required.">
-								<input name="email_pengirim" type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="Email Anda" required="required" data-error="Email is required.">
-								<input name="no_hp_pengirim" type="text" id="contact_form_phone" class="contact_form_phone input_field" placeholder="Nomor HP Anda">
+								<input name="nama_pengirim" type="text" id="contact_form_name" class="contact_form_name input_field text-dark" placeholder="Nama Anda"  value="<?= set_value('nama_pengirim'); ?>">
+								<?= form_error('nama_pengirim', '<small class="validasi pl-3">', '</small>');?>
+								<input name="email_pengirim" type="text" id="contact_form_email" class="contact_form_email input_field  text-dark" placeholder="Email Anda" value="<?= set_value('email_pengirim'); ?>">
+								<?= form_error('email_pengirim', '<small class="validasi pl-3">', '</small>');?>
+								<input name="no_hp_pengirim" type="text" id="contact_form_phone" class="contact_form_phone input_field text-dark" placeholder="Nomor HP Anda" value="<?= set_value('no_hp_pengirim'); ?>">
+								<?= form_error('no_hp_pengirim', '<small class="validasi pl-3">', '</small>');?>
 							</div>
 							<div class="contact_form_text">
-								<textarea id="contact_form_message" class="text_field contact_form_message" name="pesan" rows="4" placeholder="Pesan" required="required" data-error="Please, write us a message."></textarea>
+								<textarea id="contact_form_message" class="text_field contact_form_message text-dark" name="pesan" rows="4" placeholder="Pesan"><?= set_value('pesan'); ?></textarea>
+								<?= form_error('pesan', '<small class="validasi pl-3">', '</small>');?>
 							</div>
 							<div class="contact_form_button">
-								<button type="submit" class="button contact_submit_button">Kirim Pesan</button>
+								<button type="submit" class="button contact_submit_button">Kirim Feedback</button>
 							</div>
 						</form>
 
@@ -270,7 +279,6 @@
 	</div>
 
 	<!-- Footer -->
-
 
 	<footer class="footer">
 		<div class="container">
@@ -345,107 +353,7 @@
 
 </div>
 
-
 <!-- --------------------------------------------------------------------------------------------------------------- -->
-
-	<!--LOGIN MODAL-->
-	<div class="modal fade" id="loginModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Login Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login">
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" autofocus class="form-control" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control" required placeholder="Password">
-				        </div>
-
-				        <div class="modal-footer">
-				        	<div class="row">
-				        		<div class="col-sm-3">	
-				          			<button class="btn btn-primary" type="submit" name="submit">Login</button>
-				          		</div>
-				          		<div class="col-sm-3"></div>
-				          			<button class="btn btn-secondary ml-3" data-dismiss="modal">Tutup</button>
-				        		</div>
-				        		<div class="col-sm-6">
-				        			Belum mempunyai akun? <a id="daftarAkun" href="" data-toggle="modal" data-target="#daftarAkunModal" class="text-primary pr-3">Daftar Disini | </a><br>	
-				        			<a href="#" class="text-primary pr-3">Lupa password?</a>
-				        		</div>
-				        	</div>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR LOGIN MODAL-->
-
-	<!--DAFTAR AKUN MODAL-->
-	<div class="modal fade" id="daftarAkunModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Daftar Akun Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login/daftar">
-		        		<div class="form-group">
-				          	<label for="title">Nama</label>
-				          	<input type="text" name="nama" autofocus class="form-control text-dark" required placeholder="Nama">
-		        		</div>
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" class="form-control text-dark" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control text-dark" required placeholder="Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Konfirmasi Password</label>
-				          	<input type="password" name="konfirmasi_password" class="form-control text-dark" required placeholder="Konfirmasi Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Alamat</label>
-				          	<input type="text" name="alamat" class="form-control text-dark" required placeholder="Alamat">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">No.HP</label>
-				          	<input type="text" name="no_hp" class="form-control text-dark" required placeholder="08**********">
-				        </div>
-
-				        <div class="modal-footer">
-				          	<button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-				          	<button class="btn btn-primary" type="submit" name="submit">Daftar</button>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR DAFTAR AKUN MODAL-->
-
-
-
-<!-- script untuk jual barang -->
-<script>
-	var jualBarang = () => {
-	    <?php if (!in_array('login',  $this->session->userdata())): ?>
-			$('#loginModal').modal('show');
-		<?php else: ?>
-			window.location = "<?= base_url(); ?>barang/jual";
-		<?php endif ?>
-	}
-</script>
 
 
 <script src="<?= base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
@@ -458,6 +366,18 @@
 <script src="<?= base_url(); ?>assets/plugins/greensock/ScrollToPlugin.min.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
 <script src="<?= base_url(); ?>assets/js/contact_custom.js"></script>
+
+<!-- script untuk jual barang -->
+<script>
+	const jual = document.getElementById('jual');
+    jual.addEventListener('click', () => {
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        location = "<?php echo base_url('login'); ?>";
+      <?php else: ?>
+        location = "<?php echo base_url('barang/jual'); ?>";
+      <?php endif ?>
+    });
+</script>
 
 </body>
 

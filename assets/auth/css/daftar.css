@@ -1,0 +1,27 @@
+input {
+	color: black;
+}
+
+.warna {
+  background-color: #0E8CE4;
+  background-size: cover;
+}
+
+@media screen and (min-width: 525px) {
+	.daftar {
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+}
+
+.btn-kembali:hover {
+	background-color: #ECECEC;
+	border-radius: 20px;
+	padding: 9px 20px 9px 20px;
+	text-decoration: none;
+}
+
+.validasi {
+	font-size: 10px;
+	color: #E84A3B;
+}

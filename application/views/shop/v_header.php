@@ -24,28 +24,24 @@
 
 <body>
 
-<div class="super_container">
-	
-	<!-- Header -->
-	
+<div class="super_container">	
+	<!-- Header -->	
 	<header class="header">
-
 		<!-- Top Bar -->
-
 		<div class="top_bar">
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
 						<div class="top_bar_contact_item">
-							<span class="tombol-jual" onclick="jualBarang()">Jual Barang</span>
+							<span class="tombol-jual" id="jual">Jual Barang</span>
 						</div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
 								
 								<?php if (!in_array('login',  $this->session->userdata())) { ?>
-									<div><a href="" data-toggle="modal" data-target="#daftarAkunModal">Daftar Akun</a></div>
-									<div><a href="" data-toggle="modal" data-target="#loginModal">Login</a></div>
+									<div><a href="<?= base_url('login/da') ?>">Daftar Akun</a></div>
+									<div><a href="<?= base_url('login') ?>" >Login</a></div>
 								<?php } else { ?>
 									<div>
 										<a href="<?= base_url(); ?>Profil"><?= $this->session->userdata("nama"); ?></a>
@@ -67,16 +63,7 @@
 		<div class="header_main">
 			<div class="container">
 
-			  <?php if (in_array('login',  $this->session->userdata())) { ?>
-
-				<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				  Selamat datang pengguna jualin.id
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				  </button>
-				</div>
-				
-			  <?php } ?>
+			  <?php echo $this->session->flashdata('message'); ?>
 
 				<div class="row">
 

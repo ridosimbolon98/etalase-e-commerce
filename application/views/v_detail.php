@@ -31,15 +31,15 @@
 				<div class="row">
 					<div class="col d-flex flex-row">
 						<div class="top_bar_contact_item">
-						    <span class="tombol-jual" onclick="jualBarang()">Jual Barang</span>
+						    <span class="tombol-jual" id="jual">Jual Barang</span>
 						</div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="<?= base_url(); ?>assets/images/user.svg" alt=""></div>
 
 								<?php if (!in_array('login',  $this->session->userdata())) { ?>
-									<div><a href="" data-toggle="modal" data-target="#daftarAkunModal">Daftar Akun</a></div>
-									<div><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
+									<div><a href="<?= base_url('login/da') ?>">Daftar Akun</a></div>
+									<div><a href="<?= base_url('login') ?>" >Login</a></div>
 								<?php } else { ?>
 									<div>
 										<a href="<?= base_url(); ?>Profil"><?= $this->session->userdata("nama"); ?></a>
@@ -104,7 +104,6 @@
 
 		<!-- Menu Utama-->
 
-
 		<div class="page_menu">
 			<div class="container">
 				<div class="row">
@@ -129,20 +128,41 @@
 								</li>
 							</ul>
 							
-							<div class="menu_contact">
-								<div class="menu_contact_item">
-									<div class="menu_contact_icon">
-										<div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
-										<a href="#"><?= $this->session->userdata("nama"); ?></a>
-									</div>
-								</div>
-								<div class="menu_contact_item">
-									<div class="menu_contact_icon">
-										<img src="" alt="">
-									</div>
-									<a href="<?= base_url(); ?>login/logout">Logout</a>
-								</div>
-							</div>
+							<?php if (!in_array('login',  $this->session->userdata())) { ?>
+
+				                <div class="menu_contact">
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
+				                      <a href="<?= base_url('login/da') ?>">Daftar Akun</a>
+				                    </div>
+				                  </div>
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <img src="" alt="">
+				                    </div>
+				                    <a href="<?= base_url('login') ?>" >Login</a>
+				                  </div>
+				                </div>
+				              
+				              <?php } else { ?>
+				                <div class="menu_contact">
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <div class="user_icon"><img src="<?php echo base_url();?>assets/images/user.svg" alt=""></div>
+				                      <a href="#"><?= $this->session->userdata("nama"); ?></a>
+				                    </div>
+				                  </div>
+				                  <div class="menu_contact_item">
+				                    <div class="menu_contact_icon">
+				                      <img src="" alt="">
+				                    </div>
+				                    <a href="<?= base_url(); ?>login/logout">Logout</a>
+				                  </div>
+				                </div>
+
+				            <?php } ?>
+
 						</div>
 					</div>
 				</div>
@@ -150,8 +170,6 @@
 		</div>
 
 	</header>
-
-
 
 <!-- Bagian Utama -->
 
@@ -196,7 +214,6 @@
 						</table>
 					</div>
 				</div>
-
 
 				<div class="col-sm-6 m-3">
 					<div class="text-center">
@@ -265,10 +282,7 @@
 
 <?php } ?>
 
-
 <!-- Akhir bagian utama -->
-
-
 
 	<!-- Newsletter -->
 
@@ -295,7 +309,6 @@
 	</div>
 
 	<!-- Footer -->
-
 
 	<footer class="footer">
 		<div class="container">
@@ -369,7 +382,6 @@
 	</div>
 
 </div>
-
 
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
@@ -446,96 +458,6 @@
 	</div>
 	<!-- AKHIR UBAH PASSWORD MODAL-->
 
-
-
-	<!--LOGIN MODAL-->
-	<div class="modal fade" id="loginModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Login Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login">
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" autofocus class="form-control" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control" required placeholder="Password">
-				        </div>
-
-				        <div class="modal-footer">
-				        	<div class="row">
-				        		<div class="col-sm-3">	
-				          			<button class="btn btn-primary" type="submit" name="submit">Login</button>
-				          		</div>
-				          		<div class="col-sm-3"></div>
-				          			<button class="btn btn-secondary ml-3" data-dismiss="modal">Tutup</button>
-				        		</div>
-				        		<div class="col-sm-6">
-				        			Belum mempunyai akun? <a id="daftarAkun" href="" data-toggle="modal" data-target="#daftarAkunModal" class="text-primary pr-3">Daftar Disini | </a><br>	
-				        			<a href="#" class="text-primary pr-3">Lupa password?</a>
-				        		</div>
-				        	</div>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR LOGIN MODAL-->
-
-	<!--DAFTAR AKUN MODAL-->
-	<div class="modal fade" id="daftarAkunModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Daftar Akun Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login/daftar">
-		        		<div class="form-group">
-				          	<label for="title">Nama</label>
-				          	<input type="text" name="nama" autofocus class="form-control text-dark" required placeholder="Nama">
-		        		</div>
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" class="form-control text-dark" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control text-dark" required placeholder="Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Konfirmasi Password</label>
-				          	<input type="password" name="konfirmasi_password" class="form-control text-dark" required placeholder="Konfirmasi Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Alamat</label>
-				          	<input type="text" name="alamat" class="form-control text-dark" required placeholder="Alamat">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">No.HP</label>
-				          	<input type="text" name="no_hp" class="form-control text-dark" required placeholder="08**********">
-				        </div>
-
-				        <div class="modal-footer">
-				          	<button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-				          	<button class="btn btn-primary" type="submit" name="submit">Daftar</button>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR DAFTAR AKUN MODAL-->
-
-
-
 <script src="<?= base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
 <script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
@@ -549,13 +471,14 @@
 
 <!-- script untuk jual barang -->
 <script>
-	var jualBarang = () => {
-	    <?php if (!in_array('login',  $this->session->userdata())): ?>
-			$('#loginModal').modal('show');
-		<?php else: ?>
-			window.location = "<?= base_url(); ?>barang/jual";
-		<?php endif ?>
-	}
+	const jual = document.getElementById('jual');
+    jual.addEventListener('click', () => {
+      <?php if (!in_array('login',  $this->session->userdata())): ?>
+        location = "<?php echo base_url('login'); ?>";
+      <?php else: ?>
+        location = "<?php echo base_url('barang/jual'); ?>";
+      <?php endif ?>
+    });
 
 	
 	//ubah password validasi

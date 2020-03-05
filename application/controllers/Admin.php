@@ -15,11 +15,8 @@ class Admin extends CI_Controller {
 			$this->load->model('m_admin');
 			$this->load->model('m_pesan');
 			$this->load->library('pagination');	
-		}	
-					
+		}			
 	}
-
-
 
 	/*MENAMPILKAN DASHBOARD ADMIN*/
 	public function index(){
@@ -28,7 +25,6 @@ class Admin extends CI_Controller {
 		$where = array (
 			'status' => 'terjual'
 		);
-
 		$ada = array (
 			'status' => 'ada'
 		);
@@ -57,7 +53,7 @@ class Admin extends CI_Controller {
 		//konfigurasi pagination
         $config['base_url']    = base_url().'admin/daftarBarang'; //site url
         $config['total_rows']  = $this->m_admin->getAllBarang('barang','kategori')->num_rows();
-        $config['per_page']    = 5; //show record per halaman
+        $config['per_page']    = 10; //show record per halaman
         $config["uri_segment"] = 3;  // uri parameter
         $choice                = $config["total_rows"] / $config["per_page"];
         $config["num_links"]   = floor($choice);
@@ -89,7 +85,6 @@ class Admin extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
 
 		$this->load->view('admin/daftar_barang',$data);
-		$this->load->view('admin/footer',$data);
 	}
 
 	//menampilkan detail barang 
@@ -212,7 +207,7 @@ class Admin extends CI_Controller {
 	function verifikasi($id_tmp){
 		$this->load->database();
 
-		$data_pelanggan     = $this->m_login->getAllLangganan('langganan')->result();
+		$data_pelanggan     = $this->m_admin->getAllLangganan('langganan')->result();
 
 		$where = array (
 			'id_tmp' => $id_tmp
@@ -242,14 +237,12 @@ class Admin extends CI_Controller {
 
         	if ($delete) {
 				echo "<script>alert('Barang sudah di verifikasi');</script>";
-				echo "<script>location='".base_url()."admin';</script>";
         	} else {
         		echo "<script>alert('Gagal menghapus data temporary barang');</script>";
 				echo "<script>location='".base_url()."admin/detail/".$id_tmp."';</script>";
         	}
 
 
-        	
         	foreach ($data_pelanggan as $row) {
 				$email = $this->input->post('email');
 
@@ -258,16 +251,17 @@ class Admin extends CI_Controller {
 				  'mailtype'  => 'html',
 				  'charset'   => 'iso-8859-1',
 				  'protocol'  => 'smtp',
-				  'smtp_host' => 'ssl://smtp.gmail.com',
-				  'smtp_user' => 'ridosimbolon99@gmail.com',  // Email gmail
+				  'smtp_host' => 'smtp.gmail.com',
+				  'smtp_user' => 'datamelek@gmail.com',  // Email gmail
 				  'smtp_pass' => 'S4y@ngku',  // Password gmail
 				  'smtp_port' => 465,
+				  'smtp_crypto' => 'ssl',
 				  'crlf'      => "\r\n",
 				  'newline'   => "\r\n"
 				);
 				
 				$this->load->library('email', $config);
-				$this->email->from('ridosimbolon99@gmail.com', 'jualin.id');
+				$this->email->from('datamelek@gmail.com', 'jualin.id');
 				$this->email->to($row->email);
 				$this->email->subject('Ada barang baru ni jualers :)');
 				$this->email->message('Hai jualers, kita ada barang baru nih, yuk cek sekarang
@@ -275,6 +269,7 @@ class Admin extends CI_Controller {
 
 				if($this->email->send()) {
 				     echo "<sript>alert('Email berhasil dikirim');</script>";
+					 echo "<script>location='".base_url()."admin/';</script>";
 				}
 				else {
 				     echo "<sript>alert('Email gagal dikirim');</script>";
@@ -282,7 +277,6 @@ class Admin extends CI_Controller {
 				     echo $this->email->print_debugger();
 				}
         	}
-
 		} else {
 			echo "<script>alert('Gagal memverifikasi barang');</script>";
 			echo "<script>location='".base_url()."admin/detail/".$id_tmp."';</script>";
@@ -319,8 +313,6 @@ class Admin extends CI_Controller {
 			echo "<script>location='".base_url()."admin/detail/".$id_tmp."';</script>";
     	}
 	}
-
-
 
 	//upload data barang yang akan dijual oleh anggota
 	function jualBarang() {
@@ -394,10 +386,6 @@ class Admin extends CI_Controller {
         }
 	}
 
-
-
-
-
 	/*MENAMPILKAN HALAMAN FEEDBACK*/
 	function fp () {
 		$this->load->database();
@@ -405,7 +393,7 @@ class Admin extends CI_Controller {
 		//konfigurasi pagination
         $config['base_url']    = base_url().'admin/fp'; //site url
         $config['total_rows']  = $this->m_pesan->getJlhFeedback('feedback')->num_rows();
-        $config['per_page']    = 15; //show record per halaman
+        $config['per_page']    = 10; //show record per halaman
         $config["uri_segment"] = 3;  // uri parameter
         $choice                = $config["total_rows"] / $config["per_page"];
         $config["num_links"]   = floor($choice);
@@ -447,7 +435,7 @@ class Admin extends CI_Controller {
 		//konfigurasi pagination
         $config['base_url']    = base_url().'admin/langganan'; //site url
         $config['total_rows']  = $this->m_login->getJlhLangganan('langganan')->num_rows();
-        $config['per_page']    = 15; //show record per halaman
+        $config['per_page']    = 10; //show record per halaman
         $config["uri_segment"] = 3;  // uri parameter
         $choice                = $config["total_rows"] / $config["per_page"];
         $config["num_links"]   = floor($choice);
@@ -567,5 +555,102 @@ class Admin extends CI_Controller {
  		echo json_encode($response);
 	}
 
+
+	/*MENAMPILKAN HALAMAN KATEGORI BARANG*/
+	function kategori () {
+		$this->load->database();
+
+		//konfigurasi pagination
+        $config['base_url']    = base_url().'admin/kategori'; //site url
+        $config['total_rows']  = $this->m_admin->getJlhKategori('kategori')->num_rows();
+        $config['per_page']    = 10; //show record per halaman
+        $config["uri_segment"] = 3;  // uri parameter
+        $choice                = $config["total_rows"] / $config["per_page"];
+        $config["num_links"]   = floor($choice);
+ 
+        // Membuat Style pagination untuk BootStrap v4
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+ 
+        $this->pagination->initialize($config);
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+          
+        $data['kb']   = $this->m_admin->getAllKategori('kategori',$config["per_page"], $data['page'])->result(); 
+        $data['pagination'] = $this->pagination->create_links();
+
+		$this->load->view('admin/kategori_barang',$data);
+	}
+
+	/*FUNGSI UNTUK TAMBAH KATEGORI*/
+	function tk() {
+		$this->load->database();
+
+		$kategori = strip_tags($this->input->post('kategori'));
+
+		$dataKat  = array('nama_kategori' => $kategori);
+
+		$insert   = $this->m_admin->insertKategori('kategori', $dataKat);
+
+		if ($insert) {
+			echo "<script>alert('Kategori barang berhasil ditambahkan');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} else {
+			echo "<script>alert('Gagal menambah kategori!');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} 
+	}
+	/*AKHIR FUNGSI UNTUK TAMBAH KATEGORI*/
+
+	/*FUNGSI UNTUK MEMPERBAHARUI KATEGORI*/
+	function uk() {
+		$this->load->database();
+
+		$id       = $this->input->post('id');
+		$kategori = strip_tags($this->input->post('kategori'));
+
+		$dataKat = array('nama_kategori' => $kategori);
+
+		$update = $this->m_admin->updateKategori('kategori', $id, $dataKat);
+
+		if ($update) {
+			echo "<script>alert('Kategori barang berhasil diperbaharui');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} else {
+			echo "<script>alert('Gagal memperbaharui kategori!');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} 
+	}
+	/*AKHIR FUNGSI UNTUK MEMPERBAHARUI KATEGORI*/
+
+	/*FUNGSI UNTUK HAPUSKATEGORI*/
+	function hk($id) {
+		$this->load->database();
+		$delete = $this->m_admin->deleteKategori('kategori', $id);
+
+		if ($delete) {
+			echo "<script>alert('Kategori barang berhasil dihapus');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} else {
+			echo "<script>alert('Gagal menghapus kategori!');</script>";
+			echo "<script>location='".base_url('admin/kategori')."';</script>";
+		} 
+	}
+	/*AKHIR FUNGSI UNTUK HAPUS KATEGORI*/
 
 }

@@ -10,7 +10,6 @@ class Pesan extends CI_Controller {
 		$this->load->model('m_login');
 		$this->load->model('m_pesan');
 		$this->load->model('m_admin');
-					
 	}
 
 	/*MENAMPILKAN DASHBOARD ADMIN*/
@@ -104,7 +103,6 @@ class Pesan extends CI_Controller {
 		}
 	}
 
-
 	//upload data barang yang akan dijual oleh anggota
 	function jualBarang() {
 		$this->load->database();
@@ -113,7 +111,6 @@ class Pesan extends CI_Controller {
 
         // apakah file sudah di submit
         if($this->input->post('submit') && !empty($_FILES['gambar_barang']['name'])){
-
         	//ambil data dari form jual barang
 			$id_pengguna   = strip_tags($this->input->post('id_pengguna'));
 			$nama_brg      = strip_tags($this->input->post('nama_barang'));
@@ -176,7 +173,4 @@ class Pesan extends CI_Controller {
             }
         }
 	}
-
-
-
 }

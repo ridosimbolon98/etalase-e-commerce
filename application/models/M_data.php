@@ -115,6 +115,14 @@ class M_data extends CI_Model{
 		return $this->db->query($sql);
 	}
 
+	//FUNGSI AMBIL DATA ANGGOTA YG JUAL BARANG TERTENTU ab
+	function getAnggotaData($table,$table2,$id_barang){
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join($table2, $table.'.id='.$table2.'.penjual');
+		$this->db->where($table2.'.id='.$id_barang);
+		return $this->db->get();
+	}
 
 	/*FUNGSI UNTUK PROFIL ANGGOTA*/
 	function getDetail($table,$table2,$where) {

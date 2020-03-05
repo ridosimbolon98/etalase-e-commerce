@@ -65,10 +65,11 @@ class Shop extends CI_Controller {
 	/*MENAMPILKAN DETAIL PER PRODUK YANG DIPILIH*/
 	function produk($id_barang) {
 		$this->load->database();
-		$data['id_barang']     = $id_barang;
+		$data['id_barang']  = $id_barang;
 
 		//ambil detail barang berdasarkan id_barang
-		$data['produk']        = $this->m_data->getProduk('barang','kategori', $id_barang)->result();
+		$data['produk'] = $this->m_data->getProduk('barang','kategori', $id_barang)->result();
+        $data['penjual']= $this->m_data->getAnggotaData('anggota','barang',$id_barang)->result();
 
 		//ambil data barang terbaru dan kategori
 		$data['kategori']      = $this->m_data->getAllKategori('kategori')->result();

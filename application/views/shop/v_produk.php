@@ -1,5 +1,4 @@
 	<!-- Single Product -->
-
 	<div class="single_product">
 		<div class="container">
 			<div class="row">
@@ -46,14 +45,16 @@
 						<div class="order_info d-flex flex-row mt-3">
 							<div class="d-flex flex-row">
 								<div class="btn-adm mb-5">
-									<a class="btn btn-primary mr-2 text-white" id="chatBtn"><i class="fa fa-comment"></i> Chat</a>
+									<a class="btn btn-primary mr-2 text-white" id="chatBtn"><i class="fa fa-comment"></i> Chat Admin</a>
 								</div>
 								<div class="btn-adm mb-5">
-									<a class="btn btn-success mr-2" href="https://api.whatsapp.com/send?phone=6285361872032&text=Selamat%20Datang%20di%20Jualin%20Id" target="_blank"><i class="fab fa-whatsapp"></i> SMS/WA</a>
+									<a class="btn btn-success mr-2" href="https://api.whatsapp.com/send?phone=6285292133150&text=Halo%20Admin%20di%20Jualin%20Id" target="_blank"><i class="fab fa-whatsapp"></i> WA Admin</a>
+								</div>
+								<div class="btn-adm mb-5">
+									<a class="btn btn-warning mr-2" href="https://api.whatsapp.com/send?phone=62<?= intval($penjual[0]->hp); ?>&text=Halo%20Gan%20di%20" target="_blank"><i class="fab fa-whatsapp"></i> WA Penjual</a>
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 
@@ -70,7 +71,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="viewed_title_container">
-						<h3 class="viewed_title">Barang Terbaru</h3>
+						<h3 class="viewed_title">6 Barang Terbaru</h3>
 						<div class="viewed_nav_container">
 							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
 							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
@@ -119,98 +120,7 @@
 		</div>
 	</div>
 
-
-
-
-	
 <!-- --------------------------------------------------------------------------------------------------------------- -->
-
-	<!--LOGIN MODAL-->
-	<div class="modal fade" id="loginModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Login Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login">
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" autofocus class="form-control" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control" required placeholder="Password">
-				        </div>
-
-				        <div class="modal-footer">
-				        	<div class="row">
-				        		<div class="col-sm-3">	
-				          			<button class="btn btn-primary" type="submit" name="submit">Login</button>
-				          		</div>
-				          		<div class="col-sm-3"></div>
-				          			<button class="btn btn-secondary ml-3" data-dismiss="modal">Tutup</button>
-				        		</div>
-				        		<div class="col-sm-6">
-				        			Belum mempunyai akun? <a id="daftarAkun" href="" data-toggle="modal" data-target="#daftarAkunModal" class="text-primary pr-3">Daftar Disini | </a><br>	
-				        			<a href="#" class="text-primary pr-3">Lupa password?</a>
-				        		</div>
-				        	</div>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR LOGIN MODAL-->
-
-	<!--DAFTAR AKUN MODAL-->
-	<div class="modal fade" id="daftarAkunModal">
-		<div class="modal-dialog modal-lg">
-		  	<div class="modal-content">
-			    <div class="modal-header bg-primary text-white">
-			      	<h5 class="modal-title">Daftar Akun Anggota</h5>
-			      	<button class="close" data-dismiss="modal"><span>&times;</span></button>
-			    </div>
-		    	<div class="modal-body">
-		      		<form method="post" action="<?php echo base_url(); ?>login/daftar">
-		        		<div class="form-group">
-				          	<label for="title">Nama</label>
-				          	<input type="text" name="nama" autofocus class="form-control text-dark" required placeholder="Nama">
-		        		</div>
-		        		<div class="form-group">
-				          	<label for="title">Username/Email</label>
-				          	<input type="email" name="username" class="form-control text-dark" required placeholder="Username/Email">
-		        		</div>
-				        <div class="form-group">
-				          	<label for="title">Password</label>
-				          	<input type="password" name="password" class="form-control text-dark" required placeholder="Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Konfirmasi Password</label>
-				          	<input type="password" name="konfirmasi_password" class="form-control text-dark" required placeholder="Konfirmasi Password">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">Alamat</label>
-				          	<input type="text" name="alamat" class="form-control text-dark" required placeholder="Alamat">
-				        </div>
-				        <div class="form-group">
-				          	<label for="title">No.HP</label>
-				          	<input type="text" name="no_hp" class="form-control text-dark" required placeholder="08**********">
-				        </div>
-
-				        <div class="modal-footer">
-				          	<button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-				          	<button class="btn btn-primary" type="submit" name="submit">Daftar</button>
-				        </div>
-		      		</form>
-		    	</div>
-		  	</div>
-		</div>
-	</div>
-	<!-- AKHIR DAFTAR AKUN MODAL-->
-
 
 	<!-- CHAT MODAL-->
 	<div class="modal fade" id="chatModal">

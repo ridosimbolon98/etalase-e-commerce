@@ -8,19 +8,20 @@ class Email extends CI_Controller {
 
           $config = Array(
             'mailtype'  => 'html',
-            'charset'   => 'iso-8859-1',
+            'charset'   => 'utf-8',
             'protocol'  => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_user' => 'ridosimbolon99@gmail.com',  // Email gmail
-            'smtp_pass' => '******',  // Password gmail
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_user' => 'datamelek@gmail.com',  // Email gmail
+            'smtp_pass' => 'S4y@ngku',  // Password gmail
             'smtp_port' => 465,
+            'smtp_crypto' => 'ssl',
             'crlf'      => "\r\n",
             'newline'   => "\r\n"
           );
 
           $this->load->library('email', $config);
 
-          $this->email->from('ridosimbolon99@gmail.com', 'jualin.id');
+          $this->email->from('datamelek@gmail.com', 'jualin.id');
           $this->email->to($email_tujuan);
           $this->email->subject('Ada barang baru ni jualers :)');
           $this->email->message('Hai jualers, kita ada barang baru nih, yuk cek sekarang

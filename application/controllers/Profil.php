@@ -36,22 +36,22 @@ class Profil extends CI_Controller {
 		$id_anggota = $this->session->userdata('id');
 
 		//ambil data dari modal daftar akun
-		$nm        = $this->input->post('nama');
-		$usr       = $this->input->post('email');
-		$almt      = $this->input->post('alamat');
-		$no_hp     = $this->input->post('hp');
+		$nm     = $this->input->post('nama');
+		$eml    = $this->input->post('email');
+		$almt   = $this->input->post('alamat');
+		$no_hp  = $this->input->post('hp');
 
 		//menghilangkan adanya script injection dengan menghilangkan tag html
-		$nama     = strip_tags($nm);
-		$username = strip_tags($usr);
-		$alamat   = strip_tags($almt);
-		$noHP     = strip_tags($no_hp);
+		$nama    = strip_tags(trim($nm));
+		$email   = strip_tags(trim($eml));
+		$alamat  = strip_tags(trim($almt));
+		$noHP    = strip_tags(trim($no_hp));
 
 		$data     = array(
-			'nama'     => $nama,
-			'username' => $username,
-			'alamat'   => $alamat,
-			'hp'       => $noHP
+			'nama'   => $nama,
+			'email'  => $email,
+			'alamat' => $alamat,
+			'hp'     => $noHP
 		);
 
 		$update  = $this->m_login->editAkun("anggota",$data,$id_anggota);
@@ -66,14 +66,15 @@ class Profil extends CI_Controller {
 	}
 
 	//FUNGSI UNTUK MENGUBAH PASSWORD AKUN ANGGOTA
-	function up() {
+	function up() 
+	{
 		$this->load->database();
 		$id_anggota = $this->session->userdata('id');
 
 		//ambil data password anggota dari modal
-		$pass_lama = strip_tags(md5($this->input->post('password_lama')));
-		$pass_baru = strip_tags(md5($this->input->post('password_baru')));
-		$kpas_baru = strip_tags(md5($this->input->post('konfirmasi_password')));
+		$pass_lama = strip_tags(md5(trim($this->input->post('password_lama'))));
+		$pass_baru = strip_tags(md5(trim($this->input->post('password_baru'))));
+		$kpas_baru = strip_tags(md5(trim($this->input->post('konfirmasi_password'))));
 
 		//ambil password lama dari tabel database
 		$cekPass = $this->m_login->cekPassword('anggota',$id_anggota,$pass_lama)->num_rows();
@@ -95,12 +96,5 @@ class Profil extends CI_Controller {
 			echo "<script>alert('Password yang anda input tidak sama dengan password lama anda!');</script>";
 			echo "<script>location='".base_url('profil')."';</script>";
 		}
-		
-
 	}
-
-	
-
-
-
 }
